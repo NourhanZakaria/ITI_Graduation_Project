@@ -16,9 +16,12 @@ class Group extends Model
    function post(){
     return $this->belongsToMany(Post::class);
    }
+
+   function create()
+    {
+        return $this->belongsTo(User::class);
+    }
    
-   function userManager(){
-    return $this->belongsToMany(User::class);
-   }
+   
    
 }

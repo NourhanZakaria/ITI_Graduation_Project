@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('planes', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->enum('type',['regular','premium'])->default('regular');
             $table->integer('price');
             $table->double('discount', 8, 2);
             $table->timestamps();
