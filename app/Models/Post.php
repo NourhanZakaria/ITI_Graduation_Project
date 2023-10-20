@@ -14,4 +14,8 @@ class Post extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    function group(){
+        return $this->belongsToMany(Group::class);
+   }
 }

@@ -13,8 +13,12 @@ class Group extends Model
         return $this->belongsToMany(User::class);
    }
 
-   function groupAdmin(){
-      return $this->belongsToMany(GroupAdmin::class);
+   function post(){
+    return $this->belongsToMany(Post::class);
+   }
+   
+   function userManager(){
+    return $this->belongsToMany(User::class);
    }
    
 }

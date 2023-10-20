@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('user_chat_lawyer', function (Blueprint $table) {
             $table->id();
+            $table->string('message');
 
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('lawyer_id');

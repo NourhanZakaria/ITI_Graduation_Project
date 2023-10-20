@@ -74,4 +74,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Appointment::class);
     }
+
+    function userManger(){
+        return $this->belongsToMany(Group::class);
+       }
 }

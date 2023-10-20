@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->enum('paymentMethod',['cash','visa'])->default('cash');
             $table->foreignId('user_id')->references('id')->on('users')->onUpdate("cascade")->onDelete("cascade");
+            $table->foreignId('lawyerTime_id')->references('id')->on('lawyer_time')->onUpdate("cascade")->onDelete("cascade");
+
             $table->timestamps();
         });
     }
