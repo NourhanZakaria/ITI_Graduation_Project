@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('post');
             
             $table->foreignId("user_id")->nullable()->constrained("users")->onUpdate("cascade")->onDelete("cascade");
+            $table->foreignId("group_id")->nullable()->constrained("groups")->onUpdate("cascade")->onDelete("cascade");
             $table->timestamps();
         });
     }

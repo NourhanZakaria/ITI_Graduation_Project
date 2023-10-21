@@ -9,16 +9,22 @@ class Group extends Model
 {
     use HasFactory;
 
-    function user(){
+    function user_join(){
         return $this->belongsToMany(User::class);
    }
 
-   function post(){
+   
+   function hasPost(){
     return $this->belongsToMany(Post::class);
    }
-   
-   function userManager(){
-    return $this->belongsToMany(User::class);
-   }
-   
+
+   function userCreator()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
+
+
+ 
 }

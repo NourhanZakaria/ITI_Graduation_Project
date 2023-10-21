@@ -56,8 +56,12 @@ class User extends Authenticatable
         return $this->belongsToMany(Lawyer::class);
    }
 
-    function group(){
+    function user_joinGroup(){
         return $this->belongsToMany(Group::class);
+   }
+
+   function user_createGroup(){
+      return $this->belongsToMany(Group::class);
    }
 
     function plane()
@@ -75,7 +79,5 @@ class User extends Authenticatable
         return $this->belongsTo(Appointment::class);
     }
 
-    function userManger(){
-        return $this->belongsToMany(Group::class);
-       }
+   
 }
