@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\LawyerController;
 use App\Http\Controllers\api\SpecializationController;
 
+use App\Http\Controllers\api\UserController;
+use App\Http\Controllers\api\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +25,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('lawyers',LawyerController::class);
 Route::apiResource('specializations',SpecializationController::class);
+
+Route::apiResource('reviews',ReviewController::class);

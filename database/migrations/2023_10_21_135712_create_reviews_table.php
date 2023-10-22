@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
+            
+            $table->integer('rate');
+            $table->string('comment');
             $table->foreignId('appointment_id')->references('id')->on('appointments')->onUpdate("cascade")->onDelete("cascade");
 
             $table->timestamps();
