@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\api\LawyerController;
+use App\Http\Controllers\api\SpecializationController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +20,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('lawyers',LawyerController::class);
+Route::apiResource('specializations',SpecializationController::class);

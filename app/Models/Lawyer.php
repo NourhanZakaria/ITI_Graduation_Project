@@ -9,6 +9,17 @@ class Lawyer extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'price',
+        'span',
+        'user_id',
+    ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
     function can_be()
     {
         return $this->belongsTo(User::class);
