@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
             $table->enum('paymentMethod',['cash','visa'])->default('cash');
-            $table->timestamp('appointmentDate');
+            $table->date('appointmentDate');
             $table->time('appointmentTime');
 
 
