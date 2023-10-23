@@ -5,19 +5,17 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\Lawyer;
 use Illuminate\Http\Request;
+use App\Http\Resources\ReviewResource;
 use App\Http\Resources\LawyerResource;
-
-class LawyerController extends Controller
+use Illuminate\Support\Facades\DB;
+class ShowReviewController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $lawyer=Lawyer::all();
-        //dd($lawyer);
-        
-        return LawyerResource::collection($lawyer);
+        //
     }
 
     /**
@@ -32,9 +30,20 @@ class LawyerController extends Controller
      * Display the specified resource.
      */
     public function show(Lawyer $lawyer)
-    {     
-           return new LawyerResource($lawyer);
+    {
+        $lawyer=DB::table('lawyers')
+        ->join('lawyer_time', 'lawyers.id', '=', 'lawyer_time.lawyer_id')
+        ->join('appointments', 'lawyer_time.id', '=', 'appointments.lawyerTime_id')
+        ->join('users', 'appointments.user_id', '=', 'users.id')
+        ->join('reviews', 'appointments.id', '=', 'reviews.appointment_id')
+        ->where('lawyers.id', '=', $lawyer->id)
+        ->select('reviews.rate','reviews.comment','reviews.created_at')
+        ->get();
+ 
+
         
+        return new ReviewResource($lawyer);
+         //return $lawyer;
     }
 
     /**

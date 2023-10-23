@@ -78,6 +78,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Appointment::class);
     }
-
+    function city()
+    {
+        return $this->belongsTo(City::class);
+    }
    
 }

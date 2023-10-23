@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Specialization;
+use App\Models\LawyerTime;
+use App\Models\User;
 class Lawyer extends Model
 {
     use HasFactory;
+    protected $fillable=['price','span'];
 
     function can_be()
     {
@@ -27,7 +30,7 @@ class Lawyer extends Model
         return $this->belongsToMany(Specialization::class);
    }
 
-    function lawyer_time(){
+    function lawyerTime(){
         return $this->hasMany(LawyerTime::class);
     }
 }

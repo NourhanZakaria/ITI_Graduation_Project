@@ -3,8 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\UserController;
-use App\Http\Controllers\api\ReviewController;
+use App\Http\Controllers\api\ShowReviewController;
 use App\Http\Controllers\api\LawyerController;
+use App\Http\Controllers\api\LawyerTimeController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,5 +23,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::apiResource('reviews',ReviewController::class);
+
+Route::apiResource('lawyerTimes',LawyerTimeController::class);
 Route::apiResource('lawyers',LawyerController::class);
+Route::apiResource('reviews',ShowReviewController::class);
+
+//Route::get('reviews/{lawyer}',[ShowReviewController::class,'show']);
+//Route::get('lawyerTimes/{lawyer}',[LawyerTimeController::class,'show']);

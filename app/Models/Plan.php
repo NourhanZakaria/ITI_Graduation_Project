@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class Plane extends Model
+use App\Models\User;
+class Plan extends Model
 {
     use HasFactory;
 
