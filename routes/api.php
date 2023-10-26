@@ -28,5 +28,4 @@ Route::apiResource('lawyerTimes',LawyerTimeController::class);
 Route::apiResource('lawyers',LawyerController::class);
 Route::apiResource('reviews',ShowReviewController::class);
 
-//Route::get('reviews/{lawyer}',[ShowReviewController::class,'show']);
-//Route::get('lawyerTimes/{lawyer}',[LawyerTimeController::class,'show']);
+Route::apiResource('users',UserController::class);

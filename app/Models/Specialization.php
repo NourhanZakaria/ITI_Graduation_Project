@@ -8,7 +8,7 @@ use App\Models\Lawyer;
 class Specialization extends Model
 {
     use HasFactory;
-
+    protected $fillable=['name','image','description'];
     function lawyer(){
         return $this->belongsToMany(Lawyer::class);
    }

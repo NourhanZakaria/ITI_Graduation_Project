@@ -10,7 +10,7 @@ use App\Models\User;
 class Lawyer extends Model
 {
     use HasFactory;
-    protected $fillable=['price','span'];
+    protected $fillable=['price','span','user_id'];
 
     function can_be()
     {

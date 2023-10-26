@@ -8,6 +8,7 @@ use App\Models\User;
 class City extends Model
 {
     use HasFactory;
+    protected $fillable=['name','country_id'];
 
     function country()
     {

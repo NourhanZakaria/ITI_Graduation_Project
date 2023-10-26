@@ -5,7 +5,8 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-
+use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
 {
     /**
@@ -14,7 +15,8 @@ class UserController extends Controller
     public function index()
     {
         $users=User::all();
-        return $users;
+
+        return UserResource::collection($users);
     }
 
     /**
@@ -22,7 +24,25 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validator = Validator::make($request->all(), [
+            "name"=>"unique:users|required|min:3",
+            "email"=>['unique:users','required','email',function ($attribute, $value, $fail) {
+                if (!str_contains($value, '.com')) {
+                    $fail('The '.$attribute.' must include ".com".');
+                }
+            }],
+            "phone"=>"unique:users|required",
+            "password"=>"unique:users|required|min:8"
+
+        ]);
+     
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $user=User::create($request->all());
+        //return $user;
     }
 
     /**
@@ -30,7 +50,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return new UserResource($user);
     }
 
     /**
@@ -38,7 +58,25 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        
+        $validator = Validator::make($request->all(), [
+            "name"=>"required|min:3",
+            "email"=>['required','email',function ($attribute, $value, $fail) {
+                if (!str_contains($value, '.com')) {
+                    $fail('The '.$attribute.' must include ".com".');
+                }
+            }],
+            "phone"=>"required",
+            "password"=>"required|min:8"
+
+        ]);
+     
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+       $users=$user->update($request->all());
+       //return new UserResource($users);
     }
 
     /**
@@ -46,6 +84,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+        //return "user deleted";
     }
 }

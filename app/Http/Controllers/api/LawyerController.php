@@ -14,10 +14,7 @@ class LawyerController extends Controller
      */
     public function index()
     {
-        $lawyer=Lawyer::all();
-        //dd($lawyer);
-        
-        return LawyerResource::collection($lawyer);
+       
     }
 
     /**
@@ -33,7 +30,7 @@ class LawyerController extends Controller
      */
     public function show(Lawyer $lawyer)
     {     
-           return new LawyerResource($lawyer);
+           
         
     }
 

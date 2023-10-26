@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->enum('paymentMethod',['cash','visa'])->default('cash');
-            $table->date('appointmentDate');
-            $table->time('appointmentTime');
+            $table->enum('payment_method',['cash','visa'])->default('cash');
+            $table->date('appointment_date');
+            $table->time('appointment_time');
 
 
             $table->foreignId('user_id')->references('id')->on('users')->onUpdate("cascade")->onDelete("cascade");
-            $table->foreignId('lawyerTime_id')->references('id')->on('lawyer_time')->onUpdate("cascade")->onDelete("cascade");
+            $table->foreignId('lawyer_time_id')->references('id')->on('lawyer_times')->onUpdate("cascade")->onDelete("cascade");
 
             $table->timestamps();
         });

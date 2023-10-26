@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->integer('price');
             $table->integer('span');
+            $table->string('location');
+            $table->string('about');
             $table->timestamps();
             $table->foreignId('user_id')->references('id')->on('users')->onUpdate("cascade")->onDelete("cascade");
         });

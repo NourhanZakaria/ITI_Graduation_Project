@@ -9,7 +9,7 @@ use App\Models\Post;
 class Group extends Model
 {
     use HasFactory;
-
+    protected $fillable=['name','user_id'];
     function user_join(){
         return $this->belongsToMany(User::class);
    }

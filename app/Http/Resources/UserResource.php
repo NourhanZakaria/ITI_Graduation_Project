@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LawyerTimeResource extends JsonResource
+class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,13 +14,6 @@ class LawyerTimeResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-       return parent::toArray($request);
- 
-        // return[
-        //     "startHour"=>$this->start_hour,
-        //     "endHour"=>$this->end_hour,
-        // ];
-
-     
+        return parent::toArray($request);
     }
 }

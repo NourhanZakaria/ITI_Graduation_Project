@@ -9,8 +9,9 @@ use App\Models\Appointment;
 class LawyerTime extends Model
 {
     use HasFactory;
-    protected $fillable=['startHour','endHour','day'];
-    protected $table="lawyer_time";
+    protected $fillable=['start_hour','end_hour','day','lawyer_id'];
+
+ 
     function lawyer()
     {
         return $this->belongsTo(Lawyer::class);
