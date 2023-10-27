@@ -7,6 +7,7 @@ use App\Http\Controllers\api\SpecializationController;
 
 use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\api\ReviewController;
+use App\Http\Controllers\api\CityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('lawyers',LawyerController::class);
+
+Route::post('lawyers/search',[LawyerController::class,'search']);
+
 Route::apiResource('specializations',SpecializationController::class);
 
 Route::apiResource('reviews',ReviewController::class);
+
+Route::apiResource('cities',CityController::class);

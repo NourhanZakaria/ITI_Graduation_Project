@@ -8,6 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+use App\Models\Lawyer;
+use App\Models\City;
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -20,6 +23,10 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'image',
+        'phone',
+        'role',
+        'city_id',
         'password',
     ];
 
@@ -31,6 +38,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'email_verified_at',
+        'created_at',
+        'updated_at',
     ];
 
     /**
@@ -77,6 +87,11 @@ class User extends Authenticatable
     function appointment()
     {
         return $this->belongsTo(Appointment::class);
+    }
+
+    function city()
+    {
+        return $this->belongsTo(City::class,'city_id');
     }
 
    

@@ -5,6 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\User;
+use App\Models\Specialization;
+
+
 class Lawyer extends Model
 {
     use HasFactory;
@@ -13,14 +17,17 @@ class Lawyer extends Model
         'price',
         'span',
         'user_id',
+        'about',
+        'location',
     ];
 
     protected $hidden = [
+        'user_id',
         'created_at',
         'updated_at',
     ];
 
-    function can_be()
+    function user()
     {
         return $this->belongsTo(User::class);
     }
@@ -35,10 +42,12 @@ class Lawyer extends Model
 
      
     function specialization(){
-        return $this->belongsToMany(Specialization::class);
+        return $this->belongsToMany(Specialization::class,'lawyer_specialization','lawyer_id','specialization_id');
    }
 
     function lawyer_time(){
         return $this->hasMany(LawyerTime::class);
     }
+
+   
 }

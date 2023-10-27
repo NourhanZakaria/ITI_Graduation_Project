@@ -4,8 +4,13 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lawyer;
+use App\Models\User;
+use App\Models\City;
+use App\Models\Specialization;
+
 use Illuminate\Http\Request;
 use App\Http\Resources\LawyerResource;
+use Illuminate\Support\Facades\Validator;
 
 class LawyerController extends Controller
 {
@@ -15,8 +20,14 @@ class LawyerController extends Controller
     public function index()
     {
         //
-        $lawyers = Lawyer::all();
-        return LawyerResource::collection($lawyers);
+        $lawyers = Lawyer::join('users','users.id','lawyers.user_id')
+                           ->join('cities','cities.id','users.city_id')
+                           ->join('countries','countries.id','cities.country_id')
+                           ->select('lawyers.*','users.name as username','users.email','users.image','users.phone','users.role','cities.name as city_name','countries.name as country_name')
+                           ->get();
+
+       // dd($lawyers);
+       return LawyerResource::collection($lawyers);
     }
 
     /**
@@ -24,8 +35,40 @@ class LawyerController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        //vvvv
+        /*
+        //Validation
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|min:4',  
+        ]);
+        if($validator->fails())
+        {
+            return response($validator->errors()->all(), 422);
+        }
+        $ImageName = $request->file('ImagePath')->getClientOriginalName();
+        $request->file('ImagePath')->move(public_path('images/lawyer/'),$ImageName);
+        //Create Data
+        $data_user = [
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'image' => 'images/universities/'.$ImageName,
+            'phone' => $request['phone'],
+            'role' => $request['role'],
+            'password' => $request['password'],
+            'city_id ' => $request['city_id '],
+        ];
+        */
+        $data_lawyer = [
+            'price' => $request['price'],
+            'span' => $request['span'],
+            'user_id ' => $request['user_id'],
+        ];
+    
+        //$user   = User::create($data_user);
+        $lawyer = Lawyer::create($data_lawyer);
+
+        return (new LawyerResource($lawyer))->response()->setStatusCode(201);
+         
+        
     }
 
     /**
@@ -34,17 +77,17 @@ class LawyerController extends Controller
     public function show(Lawyer $lawyer)
     {
         //
-        $lawyer=DB::table('lawyers')
-                    ->join('lawyer_time', 'lawyers.id', '=', 'lawyer_time.lawyer_id')
-                    ->join('appointments', 'lawyer_time.id', '=', 'appointments.lawyerTime_id')
-                    ->join('users', 'appointments.user_id', '=', 'users.id')
-                    ->join('reviews', 'appointments.id', '=', 'reviews.appointment_id')
-                    ->where('lawyers.id', '=', $lawyer->id)
-                    ->select('reviews.rate','reviews.comment','reviews.created_at','lawyer_time.startHour','lawyer_time.endHour','lawyer_time.day')
-                    ->get();
 
-    
-         return new LawyerResource($lawyer);
+        $lawyer = Lawyer::join('users','users.id','lawyers.user_id')
+                        ->join('cities','cities.id','users.city_id')
+                        ->join('countries','countries.id','cities.country_id')
+                        ->select('lawyers.*','users.name as username','users.email','users.image','users.phone','users.role','cities.name as city_name','countries.name as country_name')
+                        ->where('lawyers.id',$lawyer->id)
+                        ->get();
+        return new LawyerResource($lawyer);
+
+        
+     
     }
 
     /**
@@ -62,4 +105,53 @@ class LawyerController extends Controller
     {
         //
     }
+
+    public function search(Request $request)
+    {
+     
+                
+        $specialization = $request->input('specialization');
+        $city = $request->input('city');
+
+        if($specialization !=null && $city !=null)
+        {
+                $lawyers = Lawyer::whereHas('specialization', function ($query) use ($specialization) {
+                           $query->where('name', $specialization);
+                        })
+                        ->whereHas('user.city', function ($query) use ($city) {
+                            $query->where('name', $city);
+                        })
+                        ->with('user.city')
+                        ->whereHas('user.city.country', function ($query) {})
+                        ->with('user.city.country')
+                        ->get();
+        }
+        elseif($specialization != null && $city == null)
+        {
+                $lawyers = Lawyer::whereHas('specialization', function ($query) use ($specialization) {
+                            $query->where('name', $specialization);
+                        })
+                      //  ->with('specialization')
+                        ->whereHas('user', function ($query) {})
+                        ->with('user')
+                        ->whereHas('user.city', function ($query) {})
+                        ->with('user.city')
+                        ->whereHas('user.city.country', function ($query) {})
+                        ->with('user.city.country')
+                        ->get();
+        }
+        else
+        {
+                $lawyers = Lawyer::whereHas('user.city', function ($query) use ($city) {
+                            $query->where('name', $city);
+                        })
+                        ->with('user.city')
+                        ->whereHas('user.city.country', function ($query) {})
+                        ->with('user.city.country')
+                        ->get();
+        }
+        
+        // dd($lawyers);
+        return LawyerResource::collection($lawyers);
+    } 
 }

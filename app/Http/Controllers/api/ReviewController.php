@@ -38,22 +38,15 @@ class ReviewController extends Controller
      */
     public function show(Review $review)
     {
-        // $review=DB::table('lawyers')->join('lawyer_time','lawyers.id','=','lawyer_time.lawyer_id')
-        // ->join('appointments','lawyer_time.id','=','appointments.lawyerTime_id')
-        // ->join('reviews','appointments.id','=','reviews.appointment_id')->get();
-
-        
-
-        
-//         SELECT reviews.*
-// FROM reviews
-// JOIN appointments ON reviews.appointment_id = appointments.id
-// JOIN lawyerTime ON appointments.lawyer_time_id = lawyerTime.id
-// JOIN lawyer ON lawyerTime.lawyer_id = lawyer.id
-// WHERE lawyer.id = [lawyer_id];
-
-
-        //return new ReviewResource($review);
+        $lawyer=DB::table('lawyers')
+                    ->join('lawyer_times', 'lawyers.id', '=', 'lawyer_times.lawyer_id')
+                    ->join('appointments', 'lawyer_times.id', '=', 'appointments.lawyer_time_id')
+                    ->join('users', 'appointments.user_id', '=', 'users.id')
+                    ->join('reviews', 'appointments.id', '=', 'reviews.appointment_id')
+                    ->where('lawyers.id', '=', $id)
+                    ->select('reviews.rate','reviews.comment','reviews.created_at')
+                    ->get();
+        return new ReviewResource($review);
     }
 
     /**
