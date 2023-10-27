@@ -16,7 +16,7 @@ class Group extends Model
 
    
    function hasPost(){
-    return $this->belongsToMany(Post::class);
+    return $this->hasMany(Post::class);
    }
 
    function userCreator()

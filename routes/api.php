@@ -4,8 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\api\ShowReviewController;
-use App\Http\Controllers\api\LawyerController;
 use App\Http\Controllers\api\LawyerTimeController;
+use App\Http\Controllers\api\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +25,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::apiResource('lawyerTimes',LawyerTimeController::class);
-Route::apiResource('lawyers',LawyerController::class);
 Route::apiResource('reviews',ShowReviewController::class);
-
+Route::apiResource('posts',PostController::class);
 Route::apiResource('users',UserController::class);

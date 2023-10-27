@@ -46,8 +46,8 @@ class ShowReviewController extends Controller
     public function show($id)
     {
         $lawyer=DB::table('lawyers')
-        ->join('lawyer_time', 'lawyers.id', '=', 'lawyer_time.lawyer_id')
-        ->join('appointments', 'lawyer_time.id', '=', 'appointments.lawyerTime_id')
+        ->join('lawyer_times', 'lawyers.id', '=', 'lawyer_times.lawyer_id')
+        ->join('appointments', 'lawyer_times.id', '=', 'appointments.lawyer_time_id')
         ->join('users', 'appointments.user_id', '=', 'users.id')
         ->join('reviews', 'appointments.id', '=', 'reviews.appointment_id')
         ->where('lawyers.id', '=', $id)
@@ -67,16 +67,20 @@ class ShowReviewController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Lawyer $lawyer)
+    public function update(Request $request,Review $review)
     {
-        //
+       
+    
+        $review->update($request->all());
+       
+        
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Lawyer $lawyer)
+    public function destroy(Review $review)
     {
-        //
+        $review->delete();
     }
 }

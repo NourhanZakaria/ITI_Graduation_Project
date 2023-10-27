@@ -10,7 +10,7 @@ class LawyerTime extends Model
 {
     use HasFactory;
     protected $fillable=['start_hour','end_hour','day','lawyer_id'];
-
+ 
  
     function lawyer()
     {

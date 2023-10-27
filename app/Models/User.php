@@ -28,6 +28,9 @@ class User extends Authenticatable
         'plan_id',
     ];
 
+
+  
+
     /**
      * The attributes that should be hidden for serialization.
      *
