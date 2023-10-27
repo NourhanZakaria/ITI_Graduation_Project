@@ -31,4 +31,7 @@ return [
 
     'supports_credentials' => false,
 
+    'allowed_methods' => ['GET', 'POST','PUT','DELETE','UPDATE'],
+    'allowed_origins' => ['http://localhost:8000'],
+
 ];
