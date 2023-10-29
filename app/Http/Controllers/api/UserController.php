@@ -36,17 +36,18 @@ class UserController extends Controller
             "phone"=>"unique:users|required",
             "password"=>"unique:users|required|min:8"
 
+
         ]);
      
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $uploadedFile = $request->file('image')->store('public/apiDocs');
+        // $uploadedFile = $request->file('image')->store('public/apiDocs');
   
 
-        $user=new User();
-        $user->image=$request->file->hashName();
+        // $user=new User();
+        // $user->image=$request->file->hashName();
         // You can also generate a publicly accessible URL to the stored file
         // $url = Storage::url($uploadedFile);
 
@@ -54,8 +55,8 @@ class UserController extends Controller
 
         
 
-        $users=User::create([$request->all(),$uploadedFile]);
-        return ['uploadedFile' => $uploadedFile];
+        $users=User::create($request->all());
+        //return ['uploadedFile' => $uploadedFile];
 
 
 

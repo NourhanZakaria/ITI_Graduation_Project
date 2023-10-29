@@ -69,7 +69,7 @@ class User extends Authenticatable
    }
 
    function user_createGroup(){
-      return $this->belongsToMany(Group::class);
+      return $this->hasMany(Group::class);
    }
 
     function plane()

@@ -6,7 +6,8 @@ use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\api\ShowReviewController;
 use App\Http\Controllers\api\LawyerTimeController;
 use App\Http\Controllers\api\PostController;
-
+use App\Http\Controllers\api\GroupController;
+use App\Http\Controllers\api\FollowersController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,3 +29,5 @@ Route::apiResource('lawyerTimes',LawyerTimeController::class);
 Route::apiResource('reviews',ShowReviewController::class);
 Route::apiResource('posts',PostController::class);
 Route::apiResource('users',UserController::class);
+Route::apiResource('groups',GroupController::class);
+Route::apiResource('followers',FollowersController::class);

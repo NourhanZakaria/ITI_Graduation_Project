@@ -51,7 +51,7 @@ class ShowReviewController extends Controller
         ->join('users', 'appointments.user_id', '=', 'users.id')
         ->join('reviews', 'appointments.id', '=', 'reviews.appointment_id')
         ->where('lawyers.id', '=', $id)
-        ->select('reviews.rate','reviews.comment','reviews.created_at')
+        ->select('reviews.rate','reviews.comment','reviews.created_at','users.name')
         ->get();
  
         $lawyer_id=Lawyer::find($id);
