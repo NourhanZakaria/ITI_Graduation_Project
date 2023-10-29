@@ -4,7 +4,8 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\LawyerTimeResource;
+use App\Http\Resources\UserResource;
+
 class LawyerResource extends JsonResource
 {
     /**
@@ -15,11 +16,15 @@ class LawyerResource extends JsonResource
     public function toArray(Request $request): array
     {
         return parent::toArray($request);
-
-        // return[
-        //     "price"=>$this->price,
-        //     "span"=>$this->span,
-        //     "appointment"=>$this->lawyerTime
-        // ];
+        // dd($this)
+        /*
+        return [
+            'id'      => $this->id,
+            'price'   => $this->price,
+            'span'    => $this->span,
+            'user_id' => $this->can_be,
+            'user' => UserResource::collection($this->can_be),
+        ];
+        */
     }
 }

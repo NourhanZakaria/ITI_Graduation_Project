@@ -8,6 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+use App\Models\Lawyer;
+use App\Models\City;
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -21,15 +24,15 @@ class User extends Authenticatable
         'name',
         'email',
         'image',
-         'phone',
-         'role',
+        'phone',
+        'role',
         'password',
-         'city_id',
+        'city_id',
         'plan_id',
     ];
 
 
-  
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -39,6 +42,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'email_verified_at',
+        'created_at',
+        'updated_at',
     ];
 
     /**
@@ -56,21 +62,25 @@ class User extends Authenticatable
         return $this->belongsTo(Lawyer::class);
     }
 
-    function follow(){
+    function follow()
+    {
         return $this->belongsToMany(Lawyer::class);
     }
 
-    function chat(){
+    function chat()
+    {
         return $this->belongsToMany(Lawyer::class);
-   }
+    }
 
-    function user_joinGroup(){
+    function user_joinGroup()
+    {
         return $this->belongsToMany(Group::class);
-   }
+    }
 
-   function user_createGroup(){
-      return $this->hasMany(Group::class);
-   }
+    function user_createGroup()
+    {
+        return $this->hasMany(Group::class);
+    }
 
     function plane()
     {
@@ -86,9 +96,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Appointment::class);
     }
+
     function city()
     {
-        return $this->belongsTo(City::class);
+        return $this->belongsTo(City::class, 'city_id');
     }
-   
 }
