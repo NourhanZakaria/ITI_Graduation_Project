@@ -11,6 +11,23 @@ class Appointment extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'payment_method',
+        'appointment_date',
+        'client_name',
+        'client_phone',
+        'client_email',
+        'user_id',
+        'lawyer_time_id',
+    ];
+
+    protected $hidden = [
+        'user_id',
+        'lawyer_time_id',
+        'created_at',
+        'updated_at',
+    ];
+
 
     function lawyer_time()
     {

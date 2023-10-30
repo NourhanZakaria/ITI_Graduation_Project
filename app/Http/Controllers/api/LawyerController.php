@@ -73,9 +73,11 @@ class LawyerController extends Controller
         ];
         */
         $data_lawyer = [
-            'price' => $request['price'],
-            'span' => $request['span'],
-            'user_id ' => $request['user_id'],
+            'price'    => $request['price'],
+            'span'     => $request['span'],
+            'location' => $request['location'],
+            'about'    => $request['about'],
+            'user_id' => $request['user_id'],
         ];
 
         //$user   = User::create($data_user);
@@ -91,9 +93,12 @@ class LawyerController extends Controller
     {
         //
         $id = $lawyer->id;
-        $lawyer = Lawyer::whereHas('user', function ($query) use ($id) {
-            $query->where('id', $id);
-        })
+        $lawyer = Lawyer::whereHas('specialization', function ($query) {
+             })
+            ->with('specialization')
+            ->whereHas('user', function ($query) use ($id) {
+                $query->where('id', $id);
+            })
             ->with('user')
             ->whereHas('user.city', function ($query) {
             })
@@ -119,6 +124,9 @@ class LawyerController extends Controller
     public function update(Request $request, Lawyer $lawyer)
     {
         //
+    
+         $lawyer->update($request->all());
+         return new LawyerResource($lawyer);
     }
 
     /**
@@ -127,6 +135,9 @@ class LawyerController extends Controller
     public function destroy(Lawyer $lawyer)
     {
         //
+        $lawyer->delete();
+        //return "deleted";
+        return response("Deleted", 204);
     }
 
     public function search(Request $request)

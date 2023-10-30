@@ -17,6 +17,8 @@ use App\Http\Controllers\api\PostController;
 use App\Http\Controllers\api\GroupController;
 use App\Http\Controllers\api\FollowersController;
 use App\Http\Controllers\api\CityController;
+use App\Http\Controllers\api\AppointmentController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -61,10 +63,10 @@ Route::post('/logout', function (Request $request) {
     return response('Logged_out', 200);
 });
 Route::apiResource('lawyers', LawyerController::class);
-
 Route::post('lawyers/search', [LawyerController::class, 'search']);
-
 Route::apiResource('specializations', SpecializationController::class);
+Route::apiResource('cities', CityController::class);
+Route::apiResource('appointments', AppointmentController::class);
 
 Route::apiResource('lawyerTimes', LawyerTimeController::class);
 Route::apiResource('reviews', ShowReviewController::class);
@@ -73,4 +75,4 @@ Route::apiResource('users', UserController::class);
 Route::apiResource('groups', GroupController::class);
 Route::apiResource('followers', FollowersController::class);
 
-Route::apiResource('cities', CityController::class);
+

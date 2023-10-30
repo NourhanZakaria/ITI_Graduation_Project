@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('lawyer_times', function (Blueprint $table) {
             $table->id();
             $table->string('day');
-            $table->double('start_hour', 8, 2);
-            $table->double('end_hour', 8, 2);
+            $table->time('start_hour');
+            $table->time('end_hour');
             $table->foreignId('lawyer_id')->references('id')->on('lawyers')->onUpdate("cascade")->onDelete("cascade");
             $table->timestamps();
         });
