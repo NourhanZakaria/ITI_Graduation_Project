@@ -49,7 +49,9 @@ Route::post('/sanctum/token', function (Request $request) {
         ]);
     }
 
-    return $user->createToken($request->email)->plainTextToken;
+    return [$user->createToken($request->email)->plainTextToken,
+          $user
+              ];
 });
 
 Route::post('/logout', function (Request $request) {
@@ -75,5 +77,3 @@ Route::apiResource('followers', FollowersController::class);
 
 Route::apiResource('cities', CityController::class);
 
-
-Route::get('creators/{id}',[GroupController::class,'creator']);

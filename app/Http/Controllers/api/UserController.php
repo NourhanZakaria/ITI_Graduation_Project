@@ -27,14 +27,15 @@ class UserController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            "name"=>"unique:users|required|min:3",
+            "name"=>"required|min:3",
             "email"=>['unique:users','required','email',function ($attribute, $value, $fail) {
                 if (!str_contains($value, '.com')) {
                     $fail('The '.$attribute.' must include ".com".');
                 }
             }],
             "phone"=>"unique:users|required",
-            "password"=>"required|min:8"
+            "password"=>"required|min:8",
+            'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
 
 
         ]);
@@ -43,72 +44,26 @@ class UserController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        
-        $users=User::create($request->all());
-        //dd($users);
+    
+
+        $request_data = $request->all();
+        if($request->hasFile("image")){
+            $image = $request->file('image');
+
+             $originalFilename = $image->getClientOriginalName();
+
+             //dd($originalFilename);
+             $imageName = time() . '_' . $originalFilename;
+
+            $path = $image->storeAs("userImages",$imageName,'image_uploads');
+
+            $request_data["image"]=$imageName;
+
          
-        // $uploadedFile = $request->file('image')->store('public/apiDocs');
+        }
   
-
-        // $user=new User();
-        // $user->image=$request->file->hashName();
-        // You can also generate a publicly accessible URL to the stored file
-        // $url = Storage::url($uploadedFile);
-
-        // Process the uploaded file or save its path in the database if needed
-
-        
-
-        
-        //return ['uploadedFile' => $uploadedFile];
-
-
-
-        // $validator = Validator::make($request->all(), [
-        //     "name" => "unique:users|required|min:3",
-        //     "email" => [
-        //         'unique:users',
-        //         'required',
-        //         'email',
-        //         function ($attribute, $value, $fail) {
-        //             if (!str_contains($value, '.com')) {
-        //                 $fail('The ' . $attribute . ' must include ".com".');
-        //             }
-        //         }
-        //     ],
-        //     "phone" => "unique:users|required",
-        //     "password" => "unique:users|required|min:8",
-        //     "image" => "required|image|mimes:jpeg,png,jpg,gif|max:2048", // Adjust validation rules as needed
-        // ]);
-    
-        // if ($validator->fails()) {
-        //     return response()->json(['errors' => $validator->errors()], 422);
-        // }
-    
-        // // Check if a file was uploaded
-        // if ($request->hasFile('image')) {
-        //     $image = $request->file('image');
-        //     $imageName = time() . '.' . $image->getClientOriginalExtension();
-        //     $image->move(public_path('images'), $imageName);
-    
-        //     // Save the image information to the database
-        //     $imageModel = new User();
-        //     $imageModel->image = 'images/' . $imageName;
-        //     $imageModel->save();
-    
-        //     $userData = $request->all();
-        //     $userData['file_path'] = $imageModel->image;
-    
-        //     $user = User::create($userData);
-    
-        //     // Generate a publicly accessible URL to the stored file
-        //     $url = asset($imageModel->image);
-    
-        //     return response()->json(['message' => 'User created and image uploaded successfully', 'url' => $url]);
-        // } else {
-        //     return response()->json(['error' => 'No image file provided'], 422);
-        // }
-
+      User::create($request_data);
+      
         
     }
 
@@ -134,8 +89,8 @@ class UserController extends Controller
                 }
             }],
             "phone"=>"required",
-            "password"=>"required|min:8"
-             
+            "password"=>"required|min:8",
+            'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
 
         ]);
      

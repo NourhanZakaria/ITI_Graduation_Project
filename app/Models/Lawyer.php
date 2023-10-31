@@ -34,7 +34,7 @@ class Lawyer extends Model
 
     function followers()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class,'user_follow_lawyer','lawyer_id', 'user_id');
     }
 
     function chat()

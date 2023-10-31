@@ -62,9 +62,9 @@ class User extends Authenticatable
         return $this->belongsTo(Lawyer::class);
     }
 
-    function follow()
+    function followers()
     {
-        return $this->belongsToMany(Lawyer::class);
+        return $this->belongsToMany(Lawyer::class,'user_follow_lawyer','lawyer_id', 'user_id');
     }
 
     function chat()

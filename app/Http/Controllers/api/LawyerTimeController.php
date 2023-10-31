@@ -53,7 +53,7 @@ class LawyerTimeController extends Controller
      //dd($lawyer);
 
       $lawyer=Lawyer::find($id);
-
+     
       if(!$lawyer)
         return response([],404);
 
@@ -98,6 +98,7 @@ class LawyerTimeController extends Controller
     {
         $lawyer = Lawyer::find($lawyerId);
 
+       
         if (!$lawyer) {
             return response([], 404);
         }

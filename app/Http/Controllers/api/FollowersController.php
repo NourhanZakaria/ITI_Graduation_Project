@@ -31,7 +31,7 @@ class FollowersController extends Controller
 
         $followers->save();
 
-        return $followers;
+        //return $followers;
 
     }
 
@@ -40,21 +40,16 @@ class FollowersController extends Controller
      */
     public function show($lawyerId)
     {
-        // $followers=DB::table("users")
-        // ->join("user_follow_lawyer","users.id","=","user_follow_lawyer.user_id")
-        // ->join("lawyers",'user_follow_lawyer.lawyer_id',"=","lawyers.id")
-        // ->where('lawyers.id', '=', $lawyerId)
-        // ->select("users.name","users.image");
-
         $lawyer_id=Lawyer::find($lawyerId);
 
-        
+     
         if(!$lawyer_id)
           return response([],404);
 
-       $lawyers=User::all();
-       dd($lawyers->follow);
-       //if(Auth::guard('sanctum')->user()->id==)
+        $users=$lawyer_id->followers;
+    
+
+         return new FollowersResource($users);
 
         
     }
@@ -70,8 +65,11 @@ class FollowersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Lawyer $lawyer)
+    public function destroy($followerId)
     {
-        //
+        $lawyer_id=Auth::guard('sanctum')->user()->id;
+        
+        
+        
     }
 }
