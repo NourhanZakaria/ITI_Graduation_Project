@@ -34,7 +34,7 @@ class UserController extends Controller
                 }
             }],
             "phone"=>"unique:users|required",
-            "password"=>"unique:users|required|min:8"
+            "password"=>"required|min:8"
 
 
         ]);
@@ -43,6 +43,10 @@ class UserController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
+        
+        $users=User::create($request->all());
+        //dd($users);
+         
         // $uploadedFile = $request->file('image')->store('public/apiDocs');
   
 
@@ -55,7 +59,7 @@ class UserController extends Controller
 
         
 
-        $users=User::create($request->all());
+        
         //return ['uploadedFile' => $uploadedFile];
 
 
@@ -139,7 +143,10 @@ class UserController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-       $user->update($request->all());
+        
+        $user->update($request->all());
+        
+      
        //return new UserResource($users);
     }
 
@@ -148,6 +155,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        
         $user->delete();
         //return "user deleted";
     }

@@ -81,6 +81,7 @@ class ShowReviewController extends Controller
      */
     public function destroy(Review $review)
     {
+        
         $review->delete();
     }
 }

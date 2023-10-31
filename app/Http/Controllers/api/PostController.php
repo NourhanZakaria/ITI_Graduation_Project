@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\Group;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\PostResource;
 
 class PostController extends Controller
@@ -23,8 +24,17 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $post=Post::create($request->all());
-        return $post;
+        // $post=Post::create($request->all());
+        // return $post;
+        $group_post=new Post;
+        $group_post->post=$request->post;
+        $group_post->user_id=Auth::guard('sanctum')->user()->id;
+        
+        $group_post->group_id=$request->group_id;
+             
+        $group_post->save();
+      
+        return $group_post;
     }
 
     /**
@@ -49,7 +59,15 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $post->update($request->all());
+        if($post->user_id==Auth::guard('sanctum')->user()->id){
+
+            $post->update($request->all());
+        }
+
+        else{
+            return response([], 401);
+        }
+
     }
 
     /**
@@ -57,6 +75,12 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $post->delete();
+        if($post->user_id==Auth::guard('sanctum')->user()->id){
+
+          $post->delete();
+        }
+        else{
+            return response([], 401);
+        }
     }
 }

@@ -26,36 +26,43 @@ class GroupController extends Controller
     public function store(Request $request)
     {
         //$request['user_id']=Auth::id();  
-
-        $group=Group::create($request->all());
-        
-        $group->user_id=Auth::guard('sanctum')->user();
+        //dd(Auth::guard('sanctum')->user()->id);
+        $group=new Group;
+        $group->user_id=Auth::guard('sanctum')->user()->id;
+        $group->name=$request->name;
+             
         $group->save();
+      
+       // return $group;
+        
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($userId)
+    public function show(Group $group)
     {
-        $user = User::findOrFail($userId);
         
-        $groups = $user->user_createGroup;
-
-        return new GroupResource($groups);
-
+        return new GroupResource($group);
         
     }
-
+  
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Group $group)
     {
-        if($request['user_id']==Auth::Auth::guard('sanctum')->user()){
-
+        $isAdmin=Auth::guard('sanctum')->user()->role;
+       
+        if($group->user_id==Auth::guard('sanctum')->user()->id||$isAdmin=="admin")
+         { 
+        
             $group->update($request->all());
-        }
+            return $group;
+         }
+        else{
+            return response([], 401);
+         }
 
     }
 
@@ -64,10 +71,19 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
-        if($request['user_id']==Auth::Auth::guard('sanctum')->user()){
+        $isAdmin=Auth::guard('sanctum')->user()->role;
+        if($group->user_id==Auth::guard('sanctum')->user()->id||$isAdmin=="admin")
+         { 
+        
             $group->delete();
-        }
-
+            
+         }
+        else{
+            return response([], 401);
+         }
 
     }
+
+
+  
 }

@@ -74,3 +74,6 @@ Route::apiResource('groups', GroupController::class);
 Route::apiResource('followers', FollowersController::class);
 
 Route::apiResource('cities', CityController::class);
+
+
+Route::get('creators/{id}',[GroupController::class,'creator']);
