@@ -62,7 +62,7 @@ class ShowReviewController extends Controller
   
         
         return new ReviewResource($lawyer);
-         //return $lawyer;
+         
     }
 
     /**
@@ -75,12 +75,14 @@ class ShowReviewController extends Controller
 
        
 
+
         $review=DB::table('reviews')
         ->join('appointments','reviews.appointment_id','=','appointments.id')
         ->join('users','appointments.user_id','=','users.id')
         ->where('appointments.user_id', $user_id)
         ->where('reviews.id',$reviewId);  
     
+       
         $review->update($request->all());
        
         
@@ -94,6 +96,8 @@ class ShowReviewController extends Controller
         $user=Auth::guard('sanctum')->user();
         $user_id=$user->id;
 
+
+      
         $review=DB::table('reviews')
         ->join('appointments','reviews.appointment_id','=','appointments.id')
         ->join('users','appointments.user_id','=','users.id')
