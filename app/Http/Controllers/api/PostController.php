@@ -80,7 +80,7 @@ class PostController extends Controller
           $post->delete();
         }
         else{
-            return response([], 401);
+            return response("group deleted",204);
         }
     }
 }

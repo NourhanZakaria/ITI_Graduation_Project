@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
+            $table->string('client_name');
+            $table->string('client_phone');
+            $table->string('client_email');
             $table->enum('payment_method',['cash','visa'])->default('cash');
             $table->date('appointment_date');
-            $table->time('appointment_time');
+            
 
 
             $table->foreignId('user_id')->references('id')->on('users')->onUpdate("cascade")->onDelete("cascade");

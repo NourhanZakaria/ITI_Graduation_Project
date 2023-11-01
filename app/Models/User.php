@@ -28,7 +28,6 @@ class User extends Authenticatable
         'role',
         'password',
         'city_id',
-         'plan_id',
     ];
 
 
@@ -74,7 +73,7 @@ class User extends Authenticatable
 
     function user_joinGroup()
     {
-        return $this->belongsToMany(Group::class);
+        return $this->belongsToMany(Group::class,'users_groups','user_id','group_id');
     }
 
     function user_createGroup()

@@ -110,6 +110,7 @@ class LawyerTimeController extends Controller
             $lawyerTimeRecord->delete();
         }
     
-        return response()->json(['message' => 'Lawyer time records for ' . $request->day . ' deleted successfully']);
+        // return response()->json(['message' => 'Lawyer time records for ' . $request->day . ' deleted successfully']);
+        return response("Lawyer time records for ' . $request->day . ' deleted successfully",204);
     }
 }

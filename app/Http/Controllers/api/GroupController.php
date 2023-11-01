@@ -79,7 +79,7 @@ class GroupController extends Controller
             
          }
         else{
-            return response([], 401);
+            return response("group deleted",204);
          }
 
     }

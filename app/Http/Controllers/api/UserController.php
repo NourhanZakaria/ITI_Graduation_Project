@@ -98,8 +98,24 @@ class UserController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
+
+        $request_data = $request->all();
+        if($request->hasFile("image")){
+            $image = $request->file('image');
+
+             $originalFilename = $image->getClientOriginalName();
+
+             //dd($originalFilename);
+             $imageName = time() . '_' . $originalFilename;
+
+            $path = $image->storeAs("userImages",$imageName,'image_uploads');
+
+            $request_data["image"]=$imageName;
+
+         
+        }
         
-        $user->update($request->all());
+        $user->update($request_data);
         
       
        //return new UserResource($users);
@@ -112,6 +128,6 @@ class UserController extends Controller
     {
         
         $user->delete();
-        //return "user deleted";
+        return response("user deleted",204);
     }
 }

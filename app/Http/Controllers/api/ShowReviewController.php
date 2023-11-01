@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\ReviewResource;
 use App\Http\Resources\LawyerResource;
 use App\Models\Review;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 class ShowReviewController extends Controller
@@ -67,9 +68,18 @@ class ShowReviewController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,Review $review)
+    public function update(Request $request,$reviewId)
     {
+        $user=Auth::guard('sanctum')->user();
+        $user_id=$user->id;
+
        
+
+        $review=DB::table('reviews')
+        ->join('appointments','reviews.appointment_id','=','appointments.id')
+        ->join('users','appointments.user_id','=','users.id')
+        ->where('appointments.user_id', $user_id)
+        ->where('reviews.id',$reviewId);  
     
         $review->update($request->all());
        
@@ -79,9 +89,18 @@ class ShowReviewController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Review $review)
+    public function destroy($reviewId)
     {
-        
+        $user=Auth::guard('sanctum')->user();
+        $user_id=$user->id;
+
+        $review=DB::table('reviews')
+        ->join('appointments','reviews.appointment_id','=','appointments.id')
+        ->join('users','appointments.user_id','=','users.id')
+        ->where('appointments.user_id', $user_id)
+        ->where('reviews.id',$reviewId);  
+
         $review->delete();
+
     }
 }

@@ -19,6 +19,7 @@ class GroupResource extends JsonResource
         return[
             "name"=>$this->name,
             "posts"=>PostResource::collection($this->hasPost),
+             
         ];
     }
 }
