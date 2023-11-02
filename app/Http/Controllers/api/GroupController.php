@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Group;
+use App\Models\UserGroup;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -82,6 +83,15 @@ class GroupController extends Controller
             return response("group deleted",204);
          }
 
+    }
+
+    public function join(Request $request){
+
+        $userGroups=new UserGroup;
+        $userGroups->group_id=$request->group_id;
+        $userGroups->user_id=Auth::guard('sanctum')->user()->id;
+        
+        $userGroups->save();
     }
 
 

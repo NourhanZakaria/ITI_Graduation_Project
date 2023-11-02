@@ -15,9 +15,13 @@ class CityController extends Controller
     public function index()
     {
         //
-        $cities = City::join('countries','countries.id','cities.country_id')
-                      ->select('cities.*','countries.name as country_name')
-                      ->get();
+        // $cities = City::join('countries','countries.id','cities.country_id')
+        //               ->select('cities.*','countries.name as country_name')
+        //               ->get();
+
+
+        $cities=City::all();
+
         return CityResource::collection($cities);
     }
 

@@ -75,6 +75,8 @@ class LawyerController extends Controller
         $data_lawyer = [
             'price' => $request['price'],
             'span' => $request['span'],
+            'location' => $request['location'],
+            'about' => $request['about'],
             'user_id ' => $request['user_id'],
         ];
 
@@ -148,10 +150,10 @@ class LawyerController extends Controller
                 ->whereHas('user.city', function ($query) use ($city) {
                     $query->where('name', $city);
                 })
-                ->with('user.city')
-                ->whereHas('user.city.country', function ($query) {
-                })
-                ->with('user.city.country')
+                // ->with('user.city')
+                // ->whereHas('user.city.country', function ($query) {
+                // })
+                // ->with('user.city.country')
                 ->get();
         } elseif ($specialization != null && $city == null && $name_lawyer == null) {
             $lawyers = Lawyer::whereHas('specialization', function ($query) use ($specialization) {
@@ -163,19 +165,19 @@ class LawyerController extends Controller
                 ->with('user')
                 ->whereHas('user.city', function ($query) {
                 })
-                ->with('user.city')
-                ->whereHas('user.city.country', function ($query) {
-                })
-                ->with('user.city.country')
+                // ->with('user.city')
+                // ->whereHas('user.city.country', function ($query) {
+                // })
+                // ->with('user.city.country')
                 ->get();
         } elseif ($specialization == null && $city != null && $name_lawyer == null) {
             $lawyers = Lawyer::whereHas('user.city', function ($query) use ($city) {
                 $query->where('name', $city);
             })
-                ->with('user.city')
-                ->whereHas('user.city.country', function ($query) {
-                })
-                ->with('user.city.country')
+                // ->with('user.city')
+                // ->whereHas('user.city.country', function ($query) {
+                // })
+                // ->with('user.city.country')
                 ->get();
         } elseif ($specialization == null && $city == null && $name_lawyer != null) {
 

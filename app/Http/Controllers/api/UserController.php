@@ -35,7 +35,7 @@ class UserController extends Controller
             }],
             "phone"=>"unique:users|required",
             "password"=>"required|min:8",
-            'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'image' => 'required',
 
 
         ]);
@@ -90,7 +90,7 @@ class UserController extends Controller
             }],
             "phone"=>"required",
             "password"=>"required|min:8",
-            'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'image' => 'required',
 
         ]);
      
