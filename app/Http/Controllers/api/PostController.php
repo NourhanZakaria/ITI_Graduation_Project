@@ -64,8 +64,9 @@ class PostController extends Controller
             $post->update($request->all());
         }
 
-        else{
-            return response([], 401);
+        else{ 
+           return response("Forbidden:you can’t update this post",403);
+             
         }
 
     }
@@ -78,9 +79,10 @@ class PostController extends Controller
         if($post->user_id==Auth::guard('sanctum')->user()->id){
 
           $post->delete();
+          return response("group deleted",204);
         }
         else{
-            return response("group deleted",204);
+            return response("Forbidden:you can’t delete this post",403);  
         }
     }
 }

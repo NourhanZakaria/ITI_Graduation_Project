@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Resources\GroupResource;
+use App\Http\Resources\GroupUserResource;
 class GroupController extends Controller
 {
     /**
@@ -26,15 +27,15 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        //$request['user_id']=Auth::id();  
-        //dd(Auth::guard('sanctum')->user()->id);
+        
         $group=new Group;
         $group->user_id=Auth::guard('sanctum')->user()->id;
         $group->name=$request->name;
              
         $group->save();
       
-       // return $group;
+        return $group;
+
         
     }
 
@@ -44,7 +45,7 @@ class GroupController extends Controller
     public function show(Group $group)
     {
         
-        return new GroupResource($group);
+        return new GroupUserResource($group);
         
     }
   
@@ -62,7 +63,7 @@ class GroupController extends Controller
             return $group;
          }
         else{
-            return response([], 401);
+            return response("Forbidden:you can’t update this group",403);
          }
 
     }
@@ -78,10 +79,11 @@ class GroupController extends Controller
         
             $group->delete();
             
-         }
-        else{
             return response("group deleted",204);
          }
+         else{
+            return response("Forbidden:you can’t delete this group",403);
+        }
 
     }
 

@@ -72,16 +72,17 @@ class LawyerController extends Controller
             'city_id ' => $request['city_id '],
         ];
         */
-        $data_lawyer = [
-            'price' => $request['price'],
-            'span' => $request['span'],
-            'location' => $request['location'],
-            'about' => $request['about'],
-            'user_id ' => $request['user_id'],
-        ];
+        // $data_lawyer = [
+        //     'price' => $request['price'],
+        //     'span' => $request['span'],
+        //     'location' => $request['location'],
+        //     'about' => $request['about'],
+        //     'user_id ' => $request['user_id'],
+        // ];
 
-        //$user   = User::create($data_user);
-        $lawyer = Lawyer::create($data_lawyer);
+        // //$user   = User::create($data_user);
+        
+         $lawyer = Lawyer::create($request->all());
 
         return (new LawyerResource($lawyer))->response()->setStatusCode(201);
     }

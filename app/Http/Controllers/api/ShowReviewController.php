@@ -104,7 +104,7 @@ class ShowReviewController extends Controller
         ->where('appointments.user_id', $user_id)
         ->where('reviews.id',$reviewId);  
 
-        $review->delete();
+         $review->delete();
 
     }
 }

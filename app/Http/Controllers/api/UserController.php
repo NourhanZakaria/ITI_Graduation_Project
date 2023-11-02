@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 class UserController extends Controller
@@ -72,6 +73,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+
         return new UserResource($user);
     }
 
@@ -126,8 +128,15 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        
-        $user->delete();
-        return response("user deleted",204);
+       $loggedUser=Auth::guard('sanctum')->user();
+       //dd($user->id);
+        if($loggedUser->role=='admin'||$loggedUser->id==$user->id){
+            $user->delete();
+
+            return response("user deleted",204);
+        }
+       else{
+        return response("Forbidden:you can’t delete this user",403);
+       }
     }
 }
