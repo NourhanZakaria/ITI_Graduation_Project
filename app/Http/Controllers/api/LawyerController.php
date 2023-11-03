@@ -7,7 +7,6 @@ use App\Models\Lawyer;
 use App\Models\User;
 use App\Models\City;
 use App\Models\Specialization;
-
 use Illuminate\Http\Request;
 use App\Http\Resources\LawyerResource;
 use Illuminate\Support\Facades\Validator;
@@ -20,29 +19,40 @@ class LawyerController extends Controller
     public function index()
     {
         //
-        $lawyers = Lawyer::whereHas('specialization', function ($query) {
-        })
+        // $lawyers = Lawyer::whereHas('specialization', function ($query) {
+        // })
 
-            ->whereHas('user', function ($query) {
-            })
-            ->with('user')
-            ->whereHas('user.city', function ($query) {
-            })
-            ->with('user.city')
-            ->whereHas('user.city.country', function ($query) {
-            })
-            ->with('user.city.country')
-            ->get();
-        /*
-        $lawyers = Lawyer::join('users','users.id','lawyers.user_id')
-                           ->join('cities','cities.id','users.city_id')
-                           ->join('countries','countries.id','cities.country_id')
-                           ->select('lawyers.*','users.name as username','users.email','users.image','users.phone','users.role','cities.name as city_name','countries.name as country_name')
-                           ->get();
-        */
+        //     ->whereHas('user', function ($query) {
+        //     })
+        //     ->with('user')
+        //     ->whereHas('user.city', function ($query) {
+        //     })
+        //     ->with('user.city')
+        //     ->whereHas('user.city.country', function ($query) {
+        //     })
+        //     ->with('user.city.country')
+        //     ->get();
+        // /*
 
-        // dd($lawyers);
-        return LawyerResource::collection($lawyers);
+    //    $lawyers = Lawyer::join('users','users.id','lawyers.user_id')
+    //                       ->join('cities','cities.id','users.city_id')
+    //                       ->select('lawyers.*','users.name as username','users.email','users.image','users.phone','users.role','cities.name as city_name','specializations.name')
+    //                       ->get();
+        
+
+      //  dd($lawyers);
+
+      
+      $lawyers = Lawyer::with(['user', 'specialization'])->get();
+
+      $lawyers = $lawyers->map(function ($lawyer) {
+          if (is_null($lawyer->specialization)) {
+              $lawyer->specialization = null;
+          }
+          return $lawyer;
+      });
+  
+      return LawyerResource::collection($lawyers);
     }
 
     /**

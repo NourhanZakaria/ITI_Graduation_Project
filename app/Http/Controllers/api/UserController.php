@@ -63,8 +63,9 @@ class UserController extends Controller
          
         }
   
-      User::create($request_data);
+     $user= User::create($request_data);
       
+      return new UserResource($user);
         
     }
 

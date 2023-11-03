@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\UserResource;
 
+use App\Http\Resources\SpecializationResource;
 class LawyerResource extends JsonResource
 {
     /**
@@ -26,5 +27,6 @@ class LawyerResource extends JsonResource
             'user' => UserResource::collection($this->can_be),
         ];
         */
+
     }
 }
