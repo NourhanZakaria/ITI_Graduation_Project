@@ -28,29 +28,29 @@ class LawyerController extends Controller
         //     ->whereHas('user.city', function ($query) {
         //     })
         //     ->with('user.city')
-        //     ->whereHas('user.city.country', function ($query) {
-        //     })
-        //     ->with('user.city.country')
+            
         //     ->get();
         // /*
 
-    //    $lawyers = Lawyer::join('users','users.id','lawyers.user_id')
-    //                       ->join('cities','cities.id','users.city_id')
-    //                       ->select('lawyers.*','users.name as username','users.email','users.image','users.phone','users.role','cities.name as city_name','specializations.name')
-    //                       ->get();
+        // $lawyers = Lawyer::join('users','users.id','lawyers.user_id')
+        //                    ->join('user_groups','cities.id','users.city_id')
+        //                 ->select('lawyers.*','users.name as username','users.email','users.image','users.phone','users.role','cities.name as city_name','specializations.name')
+        //                 ->get();
         
 
       //  dd($lawyers);
 
       
-      $lawyers = Lawyer::with(['user', 'specialization'])->get();
+       //$lawyers = Lawyer::with(['user', 'specialization'])->get();
 
-      $lawyers = $lawyers->map(function ($lawyer) {
-          if (is_null($lawyer->specialization)) {
-              $lawyer->specialization = null;
-          }
-          return $lawyer;
-      });
+     
+
+    //   $lawyers = $lawyers->map(function ($lawyer) {
+    //       if (is_null($lawyer->specialization)) {
+    //           $lawyer->specialization = null;
+    //       }
+    //       return $lawyer;
+    //   });
   
       return LawyerResource::collection($lawyers);
     }

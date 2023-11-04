@@ -91,7 +91,8 @@ class FollowersController extends Controller
             ->where('user_follow_lawyer.user_id',$lawyer_id)
             ->where('user_follow_lawyer.id', $followerId);
             
-      
+        
+           
             $follower->delete();
     
 

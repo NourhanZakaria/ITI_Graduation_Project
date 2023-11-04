@@ -28,5 +28,17 @@ class LawyerResource extends JsonResource
         ];
         */
 
+
+        // return[
+        //     "id"=>$this->id,
+          
+        //     //"image"=>$this->image,
+           
+        //     "users"=>UserResource::collection($this->user),
+
+        //    //"specialization"=>SpecializationResource::collection($this->lawyer),
+            
+
+        // ];
     }
 }

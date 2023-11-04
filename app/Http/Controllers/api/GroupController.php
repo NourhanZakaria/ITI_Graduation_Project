@@ -19,6 +19,12 @@ class GroupController extends Controller
     {
         $groups=Group::all();
 
+
+        // $groups = Group::leftJoin('posts', 'posts.group_id', '=', 'groups.id')
+        // ->leftJoin('users', 'users.id', '=', 'posts.user_id')
+        // ->select('groups.name as group_name', 'posts.post', 'users.name as user_name','users.image')
+        // ->get();
+
         return GroupResource::collection($groups);
     }
 
@@ -29,7 +35,10 @@ class GroupController extends Controller
     {
         
         $group=new Group;
-        $group->user_id=Auth::guard('sanctum')->user()->id;
+        
+       $user=Auth::guard('sanctum')->user();
+       
+        $group->user_id=$user->id;
         $group->name=$request->name;
              
         $group->save();

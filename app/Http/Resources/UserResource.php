@@ -25,7 +25,9 @@ class UserResource extends JsonResource
             "role"=>$this->role,
             "city_id"=>$this->city_id,
             "plan_id"=>$this->plan_id,
-            "groups"=>GroupResource::collection($this->user_createGroup),
+            "group_creator"=>GroupResource::collection($this->user_createGroup),
+            "groups"=>GroupResource::collection($this->user_joinGroup),
+
             
 
         ];

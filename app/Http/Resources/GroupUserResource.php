@@ -19,7 +19,7 @@ class GroupUserResource extends JsonResource
         return[
             "name"=>$this->name,
             "posts"=>PostResource::collection($this->hasPost),
-           "users"=>UserForGroupResource::collection($this->user_join),
+            "users"=>UserForGroupResource::collection($this->user_join),
                        
         ];
     }

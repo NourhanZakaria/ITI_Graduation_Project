@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-
+use App\Models\Lawyer;
 use App\Http\Controllers\api\LawyerController;
 use App\Http\Controllers\api\SpecializationController;
 
@@ -42,6 +42,13 @@ Route::post('/sanctum/token', function (Request $request) {
     ]);
 
     $user = User::where('email', $request->email)->first();
+    //dd($user->id);
+   
+    $lawyers = Lawyer::join('users','users.id','lawyers.user_id')
+         ->join('cities','cities.id','users.city_id')
+         ->where('lawyers.user_id',$user->id) 
+        ->get();
+       
     //if (! $user || ! $request->password == $user->password) {
     if (!$user || !Hash::check($request->password, $user->password)) {
         throw ValidationException::withMessages([
@@ -50,9 +57,17 @@ Route::post('/sanctum/token', function (Request $request) {
     }
 
    // dd($user);
-    return [$user->createToken($request->email)->plainTextToken,
-          $user
-    ];
+   if($user->role=='user'){
+            return [$user->createToken($request->email)->plainTextToken,
+            $user
+        ];
+   }
+   else{
+            return [$user->createToken($request->email)->plainTextToken,
+            $lawyers
+        ];
+   }
+    
 });
 
 Route::post('/logout', function (Request $request) {
