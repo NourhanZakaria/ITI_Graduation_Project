@@ -235,6 +235,6 @@ class LawyerController extends Controller
         }
 
         // dd($lawyers);
-        return LawyerResource::collection($lawyers)->response()->setStatusCode(404);
+        return LawyerResource::collection($lawyers);
     }
 }
