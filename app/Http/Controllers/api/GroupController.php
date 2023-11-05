@@ -62,7 +62,7 @@ class GroupController extends Controller
     public function show(Group $group)
     {
         
-        return new GroupUserResource($group);
+        return new GroupResource($group);
         
     }
   
