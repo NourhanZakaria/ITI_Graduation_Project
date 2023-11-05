@@ -83,20 +83,26 @@ class FollowersController extends Controller
     //         return response([],401);
     //     }
 
+       
+        // $follower=DB::table('user_follow_lawyer')
+        //     ->join('lawyers', 'user_follow_lawyer.lawyer_id', '=', 'lawyers.id')
+        //     ->where('user_follow_lawyer.user_id',$lawyer_id)
+        //     ->where('user_follow_lawyer.id', $followerId);
+
+
         $lawyer=Auth::guard('sanctum')->user();
         $lawyer_id=$lawyer->id;
 
+        
         $follower=DB::table('user_follow_lawyer')
-            ->join('lawyers', 'user_follow_lawyer.lawyer_id', '=', 'lawyers.id')
-            ->where('user_follow_lawyer.user_id',$lawyer_id)
-            ->where('user_follow_lawyer.id', $followerId);
+        ->where('user_id', $followerId)
+        ->where('lawyer_id', $lawyer_id)
+        ->delete();
             
         
-           
-            $follower->delete();
-    
+          
 
-        //return response('deleted successfully',204);
+        return response('deleted successfully',204);
         
     }
 }
