@@ -13,7 +13,7 @@ class Group extends Model
 
 
     function user_join(){
-        return $this->belongsToMany(User::class,'users_groups','user_id','group_id');
+        return $this->belongsToMany(User::class,'users_groups','group_id','user_id');
    }
 
    

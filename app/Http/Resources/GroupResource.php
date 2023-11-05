@@ -20,7 +20,8 @@ class GroupResource extends JsonResource
             "id"=>$this->id,
             "name"=>$this->name,
             "posts"=>PostResource::collection($this->hasPost),
-             
+            "users"=>$this->user_join,
+            //"users"=>GroupUserResource::collection($this->whenLoaded('user_join')),
         ];
     }
 }

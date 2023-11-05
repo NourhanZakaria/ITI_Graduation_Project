@@ -25,10 +25,9 @@ class UserResource extends JsonResource
             "role"=>$this->role,
             "city_id"=>$this->city_id,
             "password"=>$this->password,
-            "group_creator"=>GroupResource::collection($this->user_createGroup),
-            "groups"=>GroupResource::collection($this->user_joinGroup),
-
-            
+            "group_creator"=>$this->user_createGroup,
+            "groups"=>$this->user_joinGroup,
+         
 
         ];
     }

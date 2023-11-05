@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('user_id')->references('id')->on('users')->onUpdate("cascade")->onDelete("cascade");
+            $table->foreignId('creator_id')->references('id')->on('users')->onUpdate("cascade")->onDelete("cascade");
             $table->timestamps();
         });
     }

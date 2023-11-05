@@ -10,8 +10,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Resources\GroupResource;
 use App\Http\Resources\GroupUserResource;
+
 class GroupController extends Controller
 {
+
+   
     /**
      * Display a listing of the resource.
      */
@@ -25,7 +28,12 @@ class GroupController extends Controller
         // ->select('groups.name as group_name', 'posts.post', 'users.name as user_name','users.image')
         // ->get();
 
+        
+        // $groups = Group::with('user_join')->get();
+        // dd($groups);
+
         return GroupResource::collection($groups);
+      
     }
 
     /**
