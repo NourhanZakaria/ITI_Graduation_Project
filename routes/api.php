@@ -49,9 +49,10 @@ Route::post('/sanctum/token', function (Request $request) {
         ]);
     }
 
-   // dd($user);
-    return [$user->createToken($request->email)->plainTextToken,
-          $user
+    // dd($user);
+    return [
+        $user->createToken($request->email)->plainTextToken,
+        $user
     ];
 });
 
@@ -79,4 +80,5 @@ Route::apiResource('followers', FollowersController::class);
 Route::apiResource('cities', CityController::class);
 
 
-Route::post('joinGroups',[GroupController::class,'join']);
+Route::post('joinGroups', [GroupController::class, 'join']);
+Route::post('messages', [\App\Http\Controllers\ChatController::class, 'message']);
