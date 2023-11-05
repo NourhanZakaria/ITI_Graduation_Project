@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\City;
 use Illuminate\Http\Request;
 use App\Http\Resources\CityResource;
+use Illuminate\Support\Facades\Validator;
 
 class CityController extends Controller
 {
@@ -15,9 +16,7 @@ class CityController extends Controller
     public function index()
     {
         //
-        $cities = City::join('countries','countries.id','cities.country_id')
-                      ->select('cities.*','countries.name as country_name')
-                      ->get();
+        $cities = City::all();
         return CityResource::collection($cities);
     }
 
@@ -27,6 +26,17 @@ class CityController extends Controller
     public function store(Request $request)
     {
         //
+         //Validation
+         $validator = Validator::make($request->all(), [
+            'name' => 'required|min:4',  
+        ]);
+        if($validator->fails())
+        {
+            return response($validator->errors()->all(), 422);
+        }
+     
+        $city = City::create($request->all());
+        return (new CityResource($city))->response()->setStatusCode(201);
     }
 
     /**
@@ -43,6 +53,8 @@ class CityController extends Controller
     public function update(Request $request, City $city)
     {
         //
+        $city->update($request->all());
+        return new CityResource($city);
     }
 
     /**
@@ -51,5 +63,8 @@ class CityController extends Controller
     public function destroy(City $city)
     {
         //
+        $city->delete();
+        //return "deleted";
+        return response("Deleted", 204);
     }
 }

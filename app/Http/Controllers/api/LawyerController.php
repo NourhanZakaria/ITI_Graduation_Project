@@ -7,6 +7,7 @@ use App\Models\Lawyer;
 use App\Models\User;
 use App\Models\City;
 use App\Models\Specialization;
+use App\Models\lawyerSpecialization;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\LawyerResource;
@@ -29,18 +30,8 @@ class LawyerController extends Controller
             ->whereHas('user.city', function ($query) {
             })
             ->with('user.city')
-            ->whereHas('user.city.country', function ($query) {
-            })
-            ->with('user.city.country')
             ->get();
-        /*
-        $lawyers = Lawyer::join('users','users.id','lawyers.user_id')
-                           ->join('cities','cities.id','users.city_id')
-                           ->join('countries','countries.id','cities.country_id')
-                           ->select('lawyers.*','users.name as username','users.email','users.image','users.phone','users.role','cities.name as city_name','countries.name as country_name')
-                           ->get();
-        */
-
+            
         // dd($lawyers);
         return LawyerResource::collection($lawyers);
     }
@@ -71,7 +62,12 @@ class LawyerController extends Controller
             'password' => $request['password'],
             'city_id ' => $request['city_id '],
         ];
+         //  $specialization->push(['name'=>$request['specialization']]);
+      
+    
+        //$user   = User::create($data_user);
         */
+      
         $data_lawyer = [
             'price'    => $request['price'],
             'span'     => $request['span'],
@@ -79,9 +75,10 @@ class LawyerController extends Controller
             'about'    => $request['about'],
             'user_id' => $request['user_id'],
         ];
-
-        //$user   = User::create($data_user);
+      
+        $specialization_id = $request->input('specialization_id');
         $lawyer = Lawyer::create($data_lawyer);
+        $lawyer_specialization = lawyerSpecialization::create(['lawyer_id'=>$lawyer->id,'specialization_id'=>$specialization_id]);
 
         return (new LawyerResource($lawyer))->response()->setStatusCode(201);
     }
@@ -103,9 +100,6 @@ class LawyerController extends Controller
             ->whereHas('user.city', function ($query) {
             })
             ->with('user.city')
-            ->whereHas('user.city.country', function ($query) {
-            })
-            ->with('user.city.country')
             ->get();
         /*
         $lawyer = Lawyer::join('users','users.id','lawyers.user_id')
@@ -160,9 +154,6 @@ class LawyerController extends Controller
                     $query->where('name', $city);
                 })
                 ->with('user.city')
-                ->whereHas('user.city.country', function ($query) {
-                })
-                ->with('user.city.country')
                 ->get();
         } elseif ($specialization != null && $city == null && $name_lawyer == null) {
             $lawyers = Lawyer::whereHas('specialization', function ($query) use ($specialization) {
@@ -175,18 +166,12 @@ class LawyerController extends Controller
                 ->whereHas('user.city', function ($query) {
                 })
                 ->with('user.city')
-                ->whereHas('user.city.country', function ($query) {
-                })
-                ->with('user.city.country')
                 ->get();
         } elseif ($specialization == null && $city != null && $name_lawyer == null) {
             $lawyers = Lawyer::whereHas('user.city', function ($query) use ($city) {
                 $query->where('name', $city);
             })
                 ->with('user.city')
-                ->whereHas('user.city.country', function ($query) {
-                })
-                ->with('user.city.country')
                 ->get();
         } elseif ($specialization == null && $city == null && $name_lawyer != null) {
 
@@ -197,9 +182,6 @@ class LawyerController extends Controller
                 ->whereHas('user.city', function ($query) {
                 })
                 ->with('user.city')
-                ->whereHas('user.city.country', function ($query) {
-                })
-                ->with('user.city.country')
                 ->get();
         } elseif ($specialization == null && $city != null && $name_lawyer != null) {
 
@@ -214,9 +196,6 @@ class LawyerController extends Controller
                     $query->where('name', $city);
                 })
                 ->with('user.city')
-                ->whereHas('user.city.country', function ($query) {
-                })
-                ->with('user.city.country')
                 ->get();
         } elseif ($specialization != null && $city == null && $name_lawyer != null) {
             $lawyers = Lawyer::whereHas('specialization', function ($query) use ($specialization) {
@@ -229,9 +208,6 @@ class LawyerController extends Controller
                 ->whereHas('user.city', function ($query) {
                 })
                 ->with('user.city')
-                ->whereHas('user.city.country', function ($query) {
-                })
-                ->with('user.city.country')
                 ->get();
         } elseif ($specialization != null && $city != null && $name_lawyer == null) {
             $lawyers = Lawyer::whereHas('specialization', function ($query) use ($specialization) {
@@ -244,11 +220,18 @@ class LawyerController extends Controller
                     $query->where('name', $city);
                 })
                 ->with('user.city')
-                ->whereHas('user.city.country', function ($query) {
-                })
-                ->with('user.city.country')
                 ->get();
         } else {
+            $lawyers = Lawyer::whereHas('specialization', function ($query) {
+            })
+    
+                ->whereHas('user', function ($query) {
+                })
+                ->with('user')
+                ->whereHas('user.city', function ($query) {
+                })
+                ->with('user.city')
+                ->get();
         }
 
         // dd($lawyers);

@@ -28,7 +28,6 @@ class User extends Authenticatable
         'role',
         'password',
         'city_id',
-        'plan_id',
     ];
 
 

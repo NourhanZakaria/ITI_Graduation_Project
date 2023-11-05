@@ -16,9 +16,9 @@ class Lawyer extends Model
     protected $fillable = [
         'price',
         'span',
-        'user_id',
         'about',
         'location',
+        'user_id',
     ];
 
     protected $hidden = [
