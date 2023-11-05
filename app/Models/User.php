@@ -28,7 +28,7 @@ class User extends Authenticatable
         'role',
         'password',
         'city_id',
-       
+
     ];
 
 
@@ -64,7 +64,7 @@ class User extends Authenticatable
 
     function followers()
     {
-        return $this->belongsToMany(Lawyer::class,'user_follow_lawyer','lawyer_id', 'user_id');
+        return $this->belongsToMany(Lawyer::class, 'user_follow_lawyer', 'lawyer_id', 'user_id');
     }
 
     function chat()
@@ -74,7 +74,7 @@ class User extends Authenticatable
 
     function user_joinGroup()
     {
-        return $this->belongsToMany(Group::class,'users_groups','user_id','group_id');
+        return $this->belongsToMany(Group::class, 'users_groups', 'user_id', 'group_id');
     }
 
     function user_createGroup()

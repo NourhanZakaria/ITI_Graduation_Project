@@ -17,6 +17,8 @@ use App\Http\Controllers\api\PostController;
 use App\Http\Controllers\api\GroupController;
 use App\Http\Controllers\api\FollowersController;
 use App\Http\Controllers\api\CityController;
+use App\Http\Controllers\api\AppointmentController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -43,12 +45,12 @@ Route::post('/sanctum/token', function (Request $request) {
 
     $user = User::where('email', $request->email)->first();
     //dd($user->id);
-   
-    $lawyers = Lawyer::join('users','users.id','lawyers.user_id')
-         ->join('cities','cities.id','users.city_id')
-         ->where('lawyers.user_id',$user->id) 
+
+    $lawyers = Lawyer::join('users', 'users.id', 'lawyers.user_id')
+        ->join('cities', 'cities.id', 'users.city_id')
+        ->where('lawyers.user_id', $user->id)
         ->get();
-       
+
     //if (! $user || ! $request->password == $user->password) {
     if (!$user || !Hash::check($request->password, $user->password)) {
         throw ValidationException::withMessages([
@@ -56,18 +58,18 @@ Route::post('/sanctum/token', function (Request $request) {
         ]);
     }
 
-   // dd($user);
-   if($user->role=='user'){
-            return [$user->createToken($request->email)->plainTextToken,
+    // dd($user);
+    if ($user->role == 'user') {
+        return [
+            $user->createToken($request->email)->plainTextToken,
             $user
         ];
-   }
-   else{
-            return [$user->createToken($request->email)->plainTextToken,
+    } else {
+        return [
+            $user->createToken($request->email)->plainTextToken,
             $lawyers
         ];
-   }
-    
+    }
 });
 
 Route::post('/logout', function (Request $request) {
@@ -79,10 +81,10 @@ Route::post('/logout', function (Request $request) {
     return response('Logged_out', 200);
 });
 Route::apiResource('lawyers', LawyerController::class);
-
 Route::post('lawyers/search', [LawyerController::class, 'search']);
-
 Route::apiResource('specializations', SpecializationController::class);
+Route::apiResource('cities', CityController::class);
+Route::apiResource('appointments', AppointmentController::class);
 
 Route::apiResource('lawyerTimes', LawyerTimeController::class);
 Route::apiResource('reviews', ShowReviewController::class);
@@ -91,7 +93,6 @@ Route::apiResource('users', UserController::class);
 Route::apiResource('groups', GroupController::class);
 Route::apiResource('followers', FollowersController::class);
 
-Route::apiResource('cities', CityController::class);
 
 
-Route::post('joinGroups',[GroupController::class,'join']);
+Route::post('joinGroups', [GroupController::class, 'join']);
