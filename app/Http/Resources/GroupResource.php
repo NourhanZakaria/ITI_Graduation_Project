@@ -17,6 +17,7 @@ class GroupResource extends JsonResource
        //return parent::toArray($request);
 
         return[
+            "id"=>$this->id,
             "name"=>$this->name,
             "posts"=>PostResource::collection($this->hasPost),
              
