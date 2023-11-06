@@ -21,8 +21,8 @@ class LawyerController extends Controller
     public function index()
     {
         //
-        // $lawyers = Lawyer::whereHas('specialization', function ($query) {
-        // })
+         $lawyers = Lawyer::whereHas('specialization', function ($query) {
+         })
 
             ->whereHas('user', function ($query) {
             })

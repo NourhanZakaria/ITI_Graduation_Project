@@ -74,7 +74,16 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-
+/*
+        $user_id = $user->id;
+        $user = User::whereHas('city', function ($query) {
+                   
+                })
+                 ->with('city')
+                 ->where('id', $user_id)
+                 ->get();
+*/
+       
         return new UserResource($user);
     }
 

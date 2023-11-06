@@ -44,6 +44,14 @@ class CityController extends Controller
     public function show(City $city)
     {
         //
+        $id = $city->id;
+        $city = City::whereHas('users', function ($query) use ($id) {
+                    $query->where('id', $id);
+                })
+                 ->with('users')
+                 ->get();
+
+        return new CityResource($city);              
     }
 
     /**
