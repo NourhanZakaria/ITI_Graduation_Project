@@ -18,6 +18,7 @@ class Lawyer extends Model
         'span',
         'about',
         'location',
+        'idImage',
         'user_id',
     ];
 

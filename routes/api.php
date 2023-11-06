@@ -18,6 +18,8 @@ use App\Http\Controllers\api\GroupController;
 use App\Http\Controllers\api\FollowersController;
 use App\Http\Controllers\api\CityController;
 
+use App\Http\Controllers\api\AppointmentController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -81,6 +83,7 @@ Route::post('/logout', function (Request $request) {
 Route::apiResource('lawyers', LawyerController::class);
 
 Route::post('lawyers/search', [LawyerController::class, 'search']);
+// Route::post('lawyers/search', [LawyerController::class, 'search']);
 
 Route::apiResource('specializations', SpecializationController::class);
 
@@ -94,4 +97,7 @@ Route::apiResource('followers', FollowersController::class);
 Route::apiResource('cities', CityController::class);
 
 
+Route::apiResource('appointments', AppointmentController::class);
+
+// Route::post('lawyers/search', [LawyerController::class, 'search']);
 Route::post('joinGroups',[GroupController::class,'join']);

@@ -23,6 +23,7 @@ class UserResource extends JsonResource
             "image"=>$this->image,
             "phone"=>$this->phone,
             "role"=>$this->role,
+            "password"=>$this->password,
             "city_id"=>$this->city_id,
             "password"=>$this->password,
             "group_creator"=>$this->user_createGroup,

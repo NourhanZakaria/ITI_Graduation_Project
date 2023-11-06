@@ -16,18 +16,19 @@ class LawyerResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        // return parent::toArray($request);
         // dd($this)
-        /*
         return [
             'id'      => $this->id,
             'price'   => $this->price,
             'span'    => $this->span,
-            'user_id' => $this->can_be,
-            'user' => UserResource::collection($this->can_be),
+            'about'  =>$this->about,            
+            'location'=>$this->location,
+            'user' => $this->user,
+            'lawyer_times'=>$this->lawyer_time,
+            'specialization'=>$this->specialization,
+            //'user' => UserResource::collection($this->can_be),
         ];
-        */
-
 
         // return[
         //     "id"=>$this->id,
