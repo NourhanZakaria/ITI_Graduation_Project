@@ -17,6 +17,7 @@ use App\Http\Controllers\api\PostController;
 use App\Http\Controllers\api\GroupController;
 use App\Http\Controllers\api\FollowersController;
 use App\Http\Controllers\api\CityController;
+use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,4 +82,6 @@ Route::apiResource('cities', CityController::class);
 
 
 Route::post('joinGroups', [GroupController::class, 'join']);
-Route::post('messages', [\App\Http\Controllers\ChatController::class, 'message']);
+Route::post('/chat/send', [ChatController::class, 'sendMessage']);
+Route::get('/chat/messages/{userId}', [ChatController::class, 'getMessages']);
+// Additional routes for chat functionality
