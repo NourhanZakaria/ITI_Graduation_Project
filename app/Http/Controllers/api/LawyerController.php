@@ -65,7 +65,7 @@ class LawyerController extends Controller
         //     ->get();
 
         // dd($lawyers);
-        $lawyers=Lawyer::all();
+        $lawyers = Lawyer::all();
         return LawyerResource::collection($lawyers);
     }
 
@@ -114,8 +114,11 @@ class LawyerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Lawyer $lawyer)
+    public function show($lawyerId)
     {
+        $lawyer=Lawyer::find($lawyerId);
+
+        
         //
         // $id = $lawyer->id;
         // $lawyer = Lawyer::whereHas('specialization', function ($query) {
@@ -132,18 +135,18 @@ class LawyerController extends Controller
         //     dd($lawyer);
 
 
-        $id = $lawyer->id;
-        $lawyer = Lawyer::whereHas('user', function ($query) use ($id) {
-            $query->where('id', $id);
-        })
-            ->with('user')
-            ->whereHas('user.city', function ($query) {
-            })
-            ->with('user.city')
-            ->whereHas('user.city.country', function ($query) {
-            })
-            ->with('user.city.country')
-            ->get();
+        // $id = $lawyer->id;
+        // $lawyer = Lawyer::whereHas('user', function ($query) use ($id) {
+        //     $query->where('id', $id);
+        // })
+        //     ->with('user')
+        //     ->whereHas('user.city', function ($query) {
+        //     })
+        //     ->with('user.city')
+        //     ->whereHas('user.city.country', function ($query) {
+        //     })
+        //     ->with('user.city.country')
+        //     ->get();
         /*
         $lawyer = Lawyer::join('users','users.id','lawyers.user_id')
                         ->join('cities','cities.id','users.city_id')
@@ -375,10 +378,8 @@ class LawyerController extends Controller
                 ->get();
         } else {
             $lawyers = Lawyer::whereHas('specialization', function ($query) {
+            })->whereHas('user', function ($query) {
             })
-
-                ->whereHas('user', function ($query) {
-                })
                 ->with('user')
                 ->whereHas('user.city', function ($query) {
                 })

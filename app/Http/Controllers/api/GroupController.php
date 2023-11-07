@@ -14,13 +14,13 @@ use App\Http\Resources\GroupUserResource;
 class GroupController extends Controller
 {
 
-   
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $groups=Group::all();
+        $groups = Group::all();
 
 
         // $groups = Group::leftJoin('posts', 'posts.group_id', '=', 'groups.id')
@@ -28,12 +28,11 @@ class GroupController extends Controller
         // ->select('groups.name as group_name', 'posts.post', 'users.name as user_name','users.image')
         // ->get();
 
-        
+
         // $groups = Group::with('user_join')->get();
         // dd($groups);
 
         return GroupResource::collection($groups);
-      
     }
 
     /**
@@ -41,19 +40,17 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $group=new Group;
-        
-       $user=Auth::guard('sanctum')->user();
-       
-        $group->user_id=$user->id;
-        $group->name=$request->name;
-             
-        $group->save();
-      
-        return $group;
 
-        
+        $group = new Group;
+
+        $user = Auth::guard('sanctum')->user();
+
+        $group->user_id = $user->id;
+        $group->name = $request->name;
+
+        $group->save();
+
+        return $group;
     }
 
     /**
@@ -61,58 +58,68 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        
+
         return new GroupResource($group);
-        
     }
-  
+
     /**
      * Update the specified resource in storage.
      */
+    // public function update(Request $request, Group $group)
+    // {
+    //     $isAdmin = Auth::guard('sanctum')->user()->role;
+    //     dd($isAdmin);
+    //     if ($group->user_id == Auth::guard('sanctum')->user()->id || $isAdmin == "admin") {
+
+    //         $group->update($request->all());
+    //         // dd($group->update($request->all()));
+    //         return $group;
+    //     } else {
+    //         return response("Forbidden:you can’t update this group", 403);
+    //     }
+    // }
     public function update(Request $request, Group $group)
     {
-        $isAdmin=Auth::guard('sanctum')->user()->role;
-       
-        if($group->user_id==Auth::guard('sanctum')->user()->id||$isAdmin=="admin")
-         { 
-        
+        $isAdmin = Auth::guard('sanctum')->user();
+        dd($isAdmin);
+
+        if ($group->user_id == Auth::guard('sanctum')->user()->id || $isAdmin == "admin") {
+
             $group->update($request->all());
             return $group;
-         }
-        else{
-            return response("Forbidden:you can’t update this group",403);
-         }
-
+        } else {
+            return response("Forbidden:you can’t update this group", 403);
+        }
     }
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Group $group)
     {
-        $isAdmin=Auth::guard('sanctum')->user()->role;
-        if($group->user_id==Auth::guard('sanctum')->user()->id||$isAdmin=="admin")
-         { 
-        
-            $group->delete();
-            
-            return response("group deleted",204);
-         }
-         else{
-            return response("Forbidden:you can’t delete this group",403);
-        }
+        $isAdmin = Auth::guard('sanctum')->user()->role;
+        if ($group->user_id == Auth::guard('sanctum')->user()->id || $isAdmin == "admin") {
 
+            $group->delete();
+
+            return response("group deleted", 204);
+        } else {
+            return response("Forbidden:you can’t delete this group", 403);
+        }
     }
 
-    public function join(Request $request){
+    public function join(Request $request)
+    {
 
-        $userGroups=new UserGroup;
-        $userGroups->group_id=$request->group_id;
-        $userGroups->user_id=Auth::guard('sanctum')->user()->id;
-        
+        $userGroups = new UserGroup;
+        $userGroups->group_id = $request->group_id;
+        $userGroups->user_id = Auth::guard('sanctum')->user()->id;
+
         $userGroups->save();
     }
 
-
-  
+    public function checkJoining(Request $request, Group $group)
+    {
+        $group->update($request->all());
+        return $group;
+    }
 }

@@ -107,4 +107,59 @@ class ShowReviewController extends Controller
          $review->delete();
 
     }
+
+
+    public function makeReview(Request $request,$lawyerId)
+    {
+        $user= Auth::guard('sanctum')->user();
+        // dd($user);
+
+        //  $check=DB::table('lawyer_times')
+        //  ->join('lawyers','lawyer_times.lawyer_id','lawyers.id')
+        //  ->join('appointments','lawyer_times.id','=','appointments.lawyer_time_id')
+        //  ->join('users','appointments.user_id','=','users.id')
+        //  ->where('lawyers.id',$lawyerId)
+        //  ->where('appointments.user_id',$user->id)
+        //  ->get();
+
+        $check=DB::table('lawyers')
+        ->join('lawyer_times','lawyers.id','lawyer_times.lawyer_id')
+        ->join('appointments','lawyer_times.id','=','appointments.lawyer_time_id')
+        ->join('users','appointments.user_id','=','users.id')
+        ->where('lawyers.id',$lawyerId)
+        ->where('appointments.user_id',$user->id)
+        ->get();
+
+        // dd($check);
+
+        foreach ($check as $row) {
+            if($row->lawyer_id==$lawyerId && $row->user_id==$user->id){
+                $review=Review::create($request->all());
+                 return $review;
+            }
+         
+        }
+
+        return response()->json(['error' => 'User does not have an appointment with this lawyer'], 400);
+
+        //  if($check->lawyer_id==$lawyerId && $check->user_id){
+        //     $review=Review::create($request->all());
+        //       return $review;
+        //  }
+        //  else{
+        //     return response()->json(['error' => 'User does not have an appointment with this lawyer'], 400);
+        //  }
+      
+    //    if (!$user->appointment || !$user::with(['appointment','lawyer_time'])->where('lawyer_id', $lawyerId)) {
+    //     return response()->json(['error' => 'User does not have an appointment with this lawyer'], 400);
+    //    }
+    //     else{
+    //         $review=Review::create($request->all());
+    //         return $review;
+    //     }
+        //   if($check)
+        //     $review=Review::create($request->all());
+        //     return $review;
+    }
+
 }

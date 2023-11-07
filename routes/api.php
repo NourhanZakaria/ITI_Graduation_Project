@@ -45,12 +45,12 @@ Route::post('/sanctum/token', function (Request $request) {
 
     $user = User::where('email', $request->email)->first();
     //dd($user->id);
-   
-    $lawyers = Lawyer::join('users','users.id','lawyers.user_id')
-         ->join('cities','cities.id','users.city_id')
-         ->where('lawyers.user_id',$user->id) 
+
+    $lawyers = Lawyer::join('users', 'users.id', 'lawyers.user_id')
+        ->join('cities', 'cities.id', 'users.city_id')
+        ->where('lawyers.user_id', $user->id)
         ->get();
-       
+
     //if (! $user || ! $request->password == $user->password) {
     if (!$user || !Hash::check($request->password, $user->password)) {
         throw ValidationException::withMessages([
@@ -58,18 +58,18 @@ Route::post('/sanctum/token', function (Request $request) {
         ]);
     }
 
-   // dd($user);
-   if($user->role=='user'){
-            return [$user->createToken($request->email)->plainTextToken,
+    // dd($user);
+    if ($user->role == 'user' || $user->role == 'admin' ) {
+        return [
+            $user->createToken($request->email)->plainTextToken,
             $user
         ];
-   }
-   else{
-            return [$user->createToken($request->email)->plainTextToken,
+    } else {
+        return [
+            $user->createToken($request->email)->plainTextToken,
             $lawyers
         ];
-   }
-    
+    }
 });
 
 Route::post('/logout', function (Request $request) {
@@ -96,8 +96,10 @@ Route::apiResource('followers', FollowersController::class);
 
 Route::apiResource('cities', CityController::class);
 
+Route::post('makeReview/{id}',[ShowReviewController::class,'makeReview']);
 
+Route::put('checkJoining/{group}',[GroupController::class,'checkJoining']);
 Route::apiResource('appointments', AppointmentController::class);
 
 // Route::post('lawyers/search', [LawyerController::class, 'search']);
-Route::post('joinGroups',[GroupController::class,'join']);
+Route::post('joinGroups', [GroupController::class, 'join']);
