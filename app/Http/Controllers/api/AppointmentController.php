@@ -71,4 +71,25 @@ class AppointmentController extends Controller
     {
         //
     }
+    public function lawyer_appointments(Request $request)
+    {
+        $lawyer_id = $request->input('lawyer_id');
+
+        $appointments = Appointment::whereHas('user', function ($query) {
+            })
+            ->with('user')
+            ->whereHas('lawyer_time', function ($query) {
+            })
+            ->with('lawyer_time')
+            ->whereHas('lawyer_time.lawyer', function ($query) use ($lawyer_id) {
+                $query->where('id', $lawyer_id);
+            })
+            ->with('lawyer_time.lawyer')
+            
+            ->get();
+
+        return AppointmentResource::collection($appointments);
+
+    }
+    
 }

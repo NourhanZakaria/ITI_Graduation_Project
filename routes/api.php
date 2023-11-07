@@ -85,6 +85,8 @@ Route::post('lawyers/search', [LawyerController::class, 'search']);
 Route::apiResource('specializations', SpecializationController::class);
 Route::apiResource('cities', CityController::class);
 Route::apiResource('appointments', AppointmentController::class);
+Route::post('lawyer_appointments', [AppointmentController::class, 'lawyer_appointments']);
+
 
 Route::apiResource('lawyerTimes', LawyerTimeController::class);
 Route::apiResource('reviews', ShowReviewController::class);
