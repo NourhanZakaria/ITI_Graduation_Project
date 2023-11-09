@@ -56,6 +56,16 @@ class SpecializationController extends Controller
     public function show(Specialization $specialization)
     {
         //
+       
+        $id = $specialization->id;
+     
+
+        $specialization = Specialization::with(['lawyer' => function ($query) {
+            $query->select('lawyers.*');
+        }])
+        ->whereHas('lawyer')
+        ->findOrFail($id);
+        return new SpecializationResource($specialization);  
     }
 
     /**

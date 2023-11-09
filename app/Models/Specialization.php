@@ -26,6 +26,7 @@ class Specialization extends Model
 
     function lawyer()
     {
-        return $this->belongsToMany(Lawyer::class, 'lawyer_specialization', 'lawyer_id', 'specialization_id');
+        return $this->belongsToMany(Lawyer::class);
+        //return $this->belongsToMany(Lawyer::class, 'lawyer_specialization', 'lawyer_id', 'specialization_id');
     }
 }
