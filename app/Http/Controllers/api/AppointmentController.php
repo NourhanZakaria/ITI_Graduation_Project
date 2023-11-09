@@ -62,6 +62,11 @@ class AppointmentController extends Controller
     public function update(Request $request, Appointment $appointment)
     {
         //
+        if ($appointment->appointment_date && $appointment->appointment_date <= now()->toDateString()) {
+            return response()->json(['message' => 'This appointment cannot be updated as its updating date has passed.'], 422);
+        }
+        $appointment->update($request->all());
+        return new AppointmentResource($appointment);
     }
 
     /**
@@ -70,7 +75,13 @@ class AppointmentController extends Controller
     public function destroy(Appointment $appointment)
     {
         //
+        if ($appointment->appointment_date && $appointment->appointment_date <= now()->toDateString()) {
+            return response()->json(['message' => 'This appointment cannot be deleted as its destroying date has passed.'], 422);
+        }
+        $appointment->delete();
+        return response("Deleted", 204);
     }
+
     public function lawyer_appointments(Request $request)
     {
         $lawyer_id = $request->input('lawyer_id');
