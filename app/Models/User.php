@@ -94,7 +94,7 @@ class User extends Authenticatable
 
     function appointment()
     {
-        return $this->belongsTo(Appointment::class);
+        return $this->hasMany(Appointment::class);
     }
 
     function city()

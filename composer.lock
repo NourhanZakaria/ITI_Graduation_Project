@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "317eae892154bf2cf5ed2708cf89fcf0",
+    "content-hash": "84d7182f46cf37cd923c7fc64b741f6c",
     "packages": [
         {
             "name": "brick/math",
@@ -111,6 +111,53 @@
             },
             "abandoned": true,
             "time": "2015-03-08T14:05:44+00:00"
+        },
+        {
+            "name": "carboneio/carbone-sdk-php",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/carboneio/carbone-sdk-php.git",
+                "reference": "84b91d336cd129bc773a7a39b0f5ad889215b491"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/carboneio/carbone-sdk-php/zipball/84b91d336cd129bc773a7a39b0f5ad889215b491",
+                "reference": "84b91d336cd129bc773a7a39b0f5ad889215b491",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1",
+                "sammyjo20/saloon": "^1.6"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.5",
+                "pestphp/pest": "^1.21"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Carboneio\\SDK\\": "src/",
+                    "Carboneio\\SDK\\Tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "steevepay",
+                    "email": "contact@carbone.io"
+                }
+            ],
+            "description": "Official Carboneio PHP SDK to generate documents through the Carbone CLOUD API.",
+            "homepage": "https://github.com/carboneio/carbone-sdk-php",
+            "support": {
+                "issues": "https://github.com/carboneio/carbone-sdk-php/issues",
+                "source": "https://github.com/carboneio/carbone-sdk-php/tree/1.0.1"
+            },
+            "time": "2023-02-16T13:51:48+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -3155,6 +3202,79 @@
                 }
             ],
             "time": "2023-04-15T23:01:58+00:00"
+        },
+        {
+            "name": "sammyjo20/saloon",
+            "version": "v1.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Sammyjo20/Saloon.git",
+                "reference": "38ecead265bd66459280f0efc7025f8e9815f4cd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Sammyjo20/Saloon/zipball/38ecead265bd66459280f0efc7025f8e9815f4cd",
+                "reference": "38ecead265bd66459280f0efc7025f8e9815f4cd",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.5",
+                "illuminate/support": "^8.0 || ^9.0 || ^10.0",
+                "nesbot/carbon": "^2.64",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.5",
+                "league/flysystem": "^3.0",
+                "pestphp/pest": "^1.21",
+                "spatie/ray": "^1.33",
+                "symfony/dom-crawler": "^6.0"
+            },
+            "suggest": {
+                "symfony/dom-crawler": "Required for the SaloonResponse dom() method to parse HTML and XML."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sammyjo20\\Saloon\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sam Carré",
+                    "email": "29132017+Sammyjo20@users.noreply.github.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Build beautiful API integrations and SDKs with Saloon",
+            "homepage": "https://github.com/sammyjo20/saloon",
+            "keywords": [
+                "api",
+                "api-integrations",
+                "saloon",
+                "sammyjo20",
+                "sdk"
+            ],
+            "support": {
+                "issues": "https://github.com/Sammyjo20/Saloon/issues",
+                "source": "https://github.com/Sammyjo20/Saloon/tree/v1.7.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sammyjo20",
+                    "type": "github"
+                },
+                {
+                    "url": "https://ko-fi.com/sammyjo20",
+                    "type": "ko_fi"
+                }
+            ],
+            "abandoned": "saloonphp/saloon",
+            "time": "2023-06-06T20:00:35+00:00"
         },
         {
             "name": "symfony/console",

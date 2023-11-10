@@ -27,6 +27,7 @@ class LawyerResource extends JsonResource
             'user' => $this->user,
             'lawyer_times'=>$this->lawyer_time,
             'specialization'=>$this->specialization,
+            
             //'user' => UserResource::collection($this->can_be),
         ];
 

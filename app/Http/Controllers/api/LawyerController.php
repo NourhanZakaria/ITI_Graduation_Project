@@ -4,6 +4,8 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lawyer;
+use App\Models\lawyerSpecialization;
+// use App\Models\specialization;
 use App\Models\User;
 use App\Models\City;
 use App\Models\Specialization;
@@ -105,8 +107,9 @@ class LawyerController extends Controller
         // ];
 
         // //$user   = User::create($data_user);
-
+        $specialization_id = $request->input('specialization_id');
         $lawyer = Lawyer::create($request->all());
+        $lawyer_specialization = lawyerSpecialization::create(['lawyer_id' => $lawyer->id, 'specialization_id' => $specialization_id]);
 
         return (new LawyerResource($lawyer))->response()->setStatusCode(201);
     }
@@ -116,9 +119,8 @@ class LawyerController extends Controller
      */
     public function show($lawyerId)
     {
-        $lawyer=Lawyer::find($lawyerId);
+        // $lawyer=Lawyer::find($lawyerId);
 
-        
         //
         // $id = $lawyer->id;
         // $lawyer = Lawyer::whereHas('specialization', function ($query) {
@@ -155,6 +157,11 @@ class LawyerController extends Controller
                         ->where('lawyers.id',$lawyer->id)
                         ->get();
 */
+
+        if (!$lawyerId)
+            return response([], 404);
+
+        $lawyer = Lawyer::find($lawyerId);
         return new LawyerResource($lawyer);
     }
 
@@ -164,6 +171,8 @@ class LawyerController extends Controller
     public function update(Request $request, Lawyer $lawyer)
     {
         //
+        $lawyer->update($request->all());
+        return new LawyerResource($lawyer);
     }
 
     /**

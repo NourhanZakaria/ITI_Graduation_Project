@@ -46,9 +46,9 @@ Route::post('/sanctum/token', function (Request $request) {
     $user = User::where('email', $request->email)->first();
     //dd($user->id);
 
-    $lawyers = Lawyer::join('users', 'users.id', 'lawyers.user_id')
-        ->join('cities', 'cities.id', 'users.city_id')
-        ->where('lawyers.user_id', $user->id)
+    $lawyers = Lawyer::join('users', 'users.id', '=', 'lawyers.user_id')
+        ->where('users.id', $user->id)
+        ->select('users.*','lawyers.*','lawyers.id')
         ->get();
 
     //if (! $user || ! $request->password == $user->password) {
@@ -59,7 +59,7 @@ Route::post('/sanctum/token', function (Request $request) {
     }
 
     // dd($user);
-    if ($user->role == 'user' || $user->role == 'admin' ) {
+    if ($user->role == 'user' || $user->role == 'admin') {
         return [
             $user->createToken($request->email)->plainTextToken,
             $user
@@ -96,10 +96,12 @@ Route::apiResource('followers', FollowersController::class);
 
 Route::apiResource('cities', CityController::class);
 
-Route::post('makeReview/{id}',[ShowReviewController::class,'makeReview']);
+Route::post('makeReview/{id}', [ShowReviewController::class, 'makeReview']);
 
-Route::put('checkJoining/{group}',[GroupController::class,'checkJoining']);
+Route::put('checkJoining/{group}', [GroupController::class, 'checkJoining']);
 Route::apiResource('appointments', AppointmentController::class);
+
+Route::post('lawyer_appointments', [AppointmentController::class, 'lawyer_appointments']);
 
 // Route::post('lawyers/search', [LawyerController::class, 'search']);
 Route::post('joinGroups', [GroupController::class, 'join']);

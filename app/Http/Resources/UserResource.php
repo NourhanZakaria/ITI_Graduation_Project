@@ -28,6 +28,7 @@ class UserResource extends JsonResource
             "password"=>$this->password,
             "group_creator"=>$this->user_createGroup,
             "groups"=>$this->user_joinGroup,
+            'appointments' =>$this->appointment
          
 
         ];

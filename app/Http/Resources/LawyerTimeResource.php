@@ -16,11 +16,12 @@ class LawyerTimeResource extends JsonResource
     {
        return parent::toArray($request);
  
+ 
         // return[
         //     "startHour"=>$this->start_hour,
         //     "endHour"=>$this->end_hour,
         // ];
-
+         
      
     }
 }
