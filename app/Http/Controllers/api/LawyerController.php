@@ -21,8 +21,8 @@ class LawyerController extends Controller
     public function index()
     {
         //
-         $lawyers = Lawyer::whereHas('specialization', function ($query) {
-         })
+        $lawyers = Lawyer::whereHas('specialization', function ($query) {
+        })
 
             ->whereHas('user', function ($query) {
             })
@@ -31,7 +31,7 @@ class LawyerController extends Controller
             })
             ->with('user.city')
             ->get();
-            
+
         // dd($lawyers);
         return LawyerResource::collection($lawyers);
     }
@@ -67,18 +67,23 @@ class LawyerController extends Controller
     
         //$user   = User::create($data_user);
         */
-      
-        $data_lawyer = [
-            'price'    => $request['price'],
-            'span'     => $request['span'],
-            'location' => $request['location'],
-            'about'    => $request['about'],
-            'user_id' => $request['user_id'],
-        ];
-      
+
+        // $data_lawyer = [
+        //     'price'    => $request['price'],
+        //     'span'     => $request['span'],
+        //     'location' => $request['location'],
+        //     'about'    => $request['about'],
+        //     'user_id' => $request['user_id'],
+        // ];
+
+        // $specialization_id = $request->input('specialization_id');
+        // $lawyer = Lawyer::create($data_lawyer);
+        // $lawyer_specialization = lawyerSpecialization::create(['lawyer_id'=>$lawyer->id,'specialization_id'=>$specialization_id]);
+
+        // return (new LawyerResource($lawyer))->response()->setStatusCode(201);
         $specialization_id = $request->input('specialization_id');
-        $lawyer = Lawyer::create($data_lawyer);
-        $lawyer_specialization = lawyerSpecialization::create(['lawyer_id'=>$lawyer->id,'specialization_id'=>$specialization_id]);
+        $lawyer = Lawyer::create($request->all());
+        $lawyer_specialization = lawyerSpecialization::create(['lawyer_id' => $lawyer->id, 'specialization_id' => $specialization_id]);
 
         return (new LawyerResource($lawyer))->response()->setStatusCode(201);
     }
@@ -91,7 +96,7 @@ class LawyerController extends Controller
         //
         $id = $lawyer->id;
         $lawyer = Lawyer::whereHas('specialization', function ($query) {
-             })
+        })
             ->with('specialization')
             ->whereHas('user', function ($query) use ($id) {
                 $query->where('id', $id);
@@ -118,9 +123,9 @@ class LawyerController extends Controller
     public function update(Request $request, Lawyer $lawyer)
     {
         //
-    
-         $lawyer->update($request->all());
-         return new LawyerResource($lawyer);
+
+        $lawyer->update($request->all());
+        return new LawyerResource($lawyer);
     }
 
     /**
@@ -224,7 +229,7 @@ class LawyerController extends Controller
         } else {
             $lawyers = Lawyer::whereHas('specialization', function ($query) {
             })
-    
+
                 ->whereHas('user', function ($query) {
                 })
                 ->with('user')
