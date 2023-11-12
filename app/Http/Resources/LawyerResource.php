@@ -25,9 +25,10 @@ class LawyerResource extends JsonResource
             'about'  =>$this->about,            
             'location'=>$this->location,
             'user' => $this->user,
+            'idImage' => $this->idImage,
             'lawyer_times'=>$this->lawyer_time,
             'specialization'=>$this->specialization,
-            
+            'number_of_followers'=>$this->followers->count(),
             //'user' => UserResource::collection($this->can_be),
         ];
 
