@@ -7,9 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\LawyerTime;
 use App\Models\User;
 use App\Models\Review;
+use Thomasjohnkane\Snooze\Traits\SnoozeNotifiable;
+use Illuminate\Notifications\Notifiable;
+
+
 class Appointment extends Model
 {
     use HasFactory;
+    use Notifiable, SnoozeNotifiable;
 
     protected $fillable = [
         'payment_method',

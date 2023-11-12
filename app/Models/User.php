@@ -8,12 +8,16 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+use Thomasjohnkane\Snooze\Traits\SnoozeNotifiable;
+//use Illuminate\Notifications\Notifiable;
+
 use App\Models\Lawyer;
 use App\Models\City;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use Notifiable, SnoozeNotifiable;
 
     /**
      * The attributes that are mass assignable.

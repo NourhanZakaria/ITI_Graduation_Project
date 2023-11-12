@@ -9,9 +9,13 @@ use App\Models\User;
 use App\Models\Specialization;
 use App\Models\LawyerTime;
 
+use Illuminate\Notifications\Notifiable;
+use Thomasjohnkane\Snooze\Traits\SnoozeNotifiable;
+
 class Lawyer extends Model
 {
     use HasFactory;
+    use Notifiable, SnoozeNotifiable;
 
     protected $fillable = [
         'price',

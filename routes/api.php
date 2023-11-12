@@ -18,6 +18,8 @@ use App\Http\Controllers\api\GroupController;
 use App\Http\Controllers\api\FollowersController;
 use App\Http\Controllers\api\CityController;
 use App\Http\Controllers\api\AppointmentController;
+use App\Http\Controllers\api\NotificationsController;
+
 
 
 /*
@@ -51,7 +53,7 @@ Route::post('/sanctum/token', function (Request $request) {
         ->where('lawyers.user_id', $user->id)
         ->get();
 
-    //if (! $user || ! $request->password == $user->password) {
+   // if (! $user || ! $request->password == $user->password) {
     if (!$user || !Hash::check($request->password, $user->password)) {
         throw ValidationException::withMessages([
             'email' => ['The provided credentials are incorrect.'],
@@ -86,6 +88,7 @@ Route::apiResource('specializations', SpecializationController::class);
 Route::apiResource('cities', CityController::class);
 Route::apiResource('appointments', AppointmentController::class);
 Route::post('lawyer_appointments', [AppointmentController::class, 'lawyer_appointments']);
+Route::get('notifications', [NotificationsController::class, 'notifications']);
 
 
 Route::apiResource('lawyerTimes', LawyerTimeController::class);
