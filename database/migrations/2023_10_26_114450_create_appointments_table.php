@@ -16,9 +16,10 @@ return new class extends Migration
             $table->string('client_name');
             $table->string('client_phone');
             $table->string('client_email');
-            $table->enum('payment_method',['cash','visa'])->default('cash');
+            $table->enum('payment_method', ['cash', 'visa'])->default('cash');
             $table->date('appointment_date');
-            
+
+
 
 
             $table->foreignId('user_id')->references('id')->on('users')->onUpdate("cascade")->onDelete("cascade");

@@ -9,6 +9,7 @@ use App\Models\lawyerSpecialization;
 use App\Models\User;
 use App\Models\City;
 use App\Models\Specialization;
+
 use Illuminate\Http\Request;
 use App\Http\Resources\LawyerResource;
 use Illuminate\Support\Facades\Validator;
@@ -21,8 +22,8 @@ class LawyerController extends Controller
     public function index()
     {
         //
-        // $lawyers = Lawyer::whereHas('specialization', function ($query) {
-        // })
+        //  $lawyers = Lawyer::whereHas('specialization', function ($query) {
+        //  })
 
         //     ->whereHas('user', function ($query) {
         //     })
@@ -171,6 +172,7 @@ class LawyerController extends Controller
     public function update(Request $request, Lawyer $lawyer)
     {
         //
+
         $lawyer->update($request->all());
         return new LawyerResource($lawyer);
     }
@@ -180,7 +182,9 @@ class LawyerController extends Controller
      */
     public function destroy(Lawyer $lawyer)
     {
-        //
+        $lawyer->delete();
+        //return "deleted";
+        return response("Deleted", 204);
     }
 
     // public function search(Request $request)
@@ -387,8 +391,10 @@ class LawyerController extends Controller
                 ->get();
         } else {
             $lawyers = Lawyer::whereHas('specialization', function ($query) {
-            })->whereHas('user', function ($query) {
             })
+
+                ->whereHas('user', function ($query) {
+                })
                 ->with('user')
                 ->whereHas('user.city', function ($query) {
                 })

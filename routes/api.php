@@ -17,8 +17,10 @@ use App\Http\Controllers\api\PostController;
 use App\Http\Controllers\api\GroupController;
 use App\Http\Controllers\api\FollowersController;
 use App\Http\Controllers\api\CityController;
-
 use App\Http\Controllers\api\AppointmentController;
+use App\Http\Controllers\api\NotificationsController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -48,7 +50,7 @@ Route::post('/sanctum/token', function (Request $request) {
 
     $lawyers = Lawyer::join('users', 'users.id', '=', 'lawyers.user_id')
         ->where('users.id', $user->id)
-        ->select('users.*','lawyers.*','lawyers.id')
+        ->select('users.*', 'lawyers.*', 'lawyers.id')
         ->get();
 
     //if (! $user || ! $request->password == $user->password) {
@@ -81,11 +83,13 @@ Route::post('/logout', function (Request $request) {
     return response('Logged_out', 200);
 });
 Route::apiResource('lawyers', LawyerController::class);
-
 Route::post('lawyers/search', [LawyerController::class, 'search']);
-// Route::post('lawyers/search', [LawyerController::class, 'search']);
-
 Route::apiResource('specializations', SpecializationController::class);
+Route::apiResource('cities', CityController::class);
+Route::apiResource('appointments', AppointmentController::class);
+Route::post('lawyer_appointments', [AppointmentController::class, 'lawyer_appointments']);
+Route::get('notifications', [NotificationsController::class, 'notifications']);
+
 
 Route::apiResource('lawyerTimes', LawyerTimeController::class);
 Route::apiResource('reviews', ShowReviewController::class);
@@ -94,7 +98,6 @@ Route::apiResource('users', UserController::class);
 Route::apiResource('groups', GroupController::class);
 Route::apiResource('followers', FollowersController::class);
 
-Route::apiResource('cities', CityController::class);
 
 Route::post('makeReview/{id}', [ShowReviewController::class, 'makeReview']);
 

@@ -8,12 +8,16 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+use Thomasjohnkane\Snooze\Traits\SnoozeNotifiable;
+//use Illuminate\Notifications\Notifiable;
+
 use App\Models\Lawyer;
 use App\Models\City;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use Notifiable, SnoozeNotifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -28,7 +32,7 @@ class User extends Authenticatable
         'role',
         'password',
         'city_id',
-       
+
     ];
 
 
@@ -64,7 +68,7 @@ class User extends Authenticatable
 
     function followers()
     {
-        return $this->belongsToMany(Lawyer::class,'user_follow_lawyer','user_id','lawyer_id' );
+        return $this->belongsToMany(Lawyer::class, 'user_follow_lawyer', 'user_id', 'lawyer_id');
     }
 
     function chat()
@@ -74,7 +78,7 @@ class User extends Authenticatable
 
     function user_joinGroup()
     {
-        return $this->belongsToMany(Group::class,'users_groups','user_id','group_id');
+        return $this->belongsToMany(Group::class, 'users_groups', 'user_id', 'group_id');
     }
 
     function user_createGroup()

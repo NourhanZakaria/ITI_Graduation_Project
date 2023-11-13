@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lawyer_times', function (Blueprint $table) {
-            $table->id();
-            $table->string('day');
-            $table->time('start_hour');
-            $table->time('end_hour');
-            $table->foreignId('lawyer_id')->references('id')->on('lawyers')->onUpdate("cascade")->onDelete("cascade");
+        Schema::create('notifications', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('type');
+            $table->morphs('notifiable');
+            $table->text('data');
+            $table->timestamp('read_at')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lawyer_times');
+        Schema::dropIfExists('notifications');
     }
 };
