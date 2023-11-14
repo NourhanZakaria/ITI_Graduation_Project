@@ -19,6 +19,7 @@ use App\Http\Controllers\api\FollowersController;
 use App\Http\Controllers\api\CityController;
 
 use App\Http\Controllers\api\AppointmentController;
+use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,7 +49,7 @@ Route::post('/sanctum/token', function (Request $request) {
 
     $lawyers = Lawyer::join('users', 'users.id', '=', 'lawyers.user_id')
         ->where('users.id', $user->id)
-        ->select('users.*','lawyers.*','lawyers.id')
+        ->select('users.*', 'lawyers.*', 'lawyers.id')
         ->get();
 
     //if (! $user || ! $request->password == $user->password) {
@@ -105,3 +106,6 @@ Route::post('lawyer_appointments', [AppointmentController::class, 'lawyer_appoin
 
 // Route::post('lawyers/search', [LawyerController::class, 'search']);
 Route::post('joinGroups', [GroupController::class, 'join']);
+
+Route::get('/chat/{receiverId}', [ChatController::class, 'getChatHistory']);
+Route::post('/chat/{receiverId}', [ChatController::class, 'store']);
