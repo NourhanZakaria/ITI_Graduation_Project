@@ -108,3 +108,4 @@ Route::post('lawyer_appointments', [AppointmentController::class, 'lawyer_appoin
 
 // Route::post('lawyers/search', [LawyerController::class, 'search']);
 Route::post('joinGroups', [GroupController::class, 'join']);
+Route::get('showlawyer/{id}', [LawyerController::class, 'showlawyer']);

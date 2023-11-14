@@ -405,4 +405,12 @@ class LawyerController extends Controller
         // dd($lawyers);
         return LawyerResource::collection($lawyers);
     }
+    public function showlawyer($lawyerId)
+    {
+        $lawyer = Lawyer::where('user_id', $lawyerId)->first();
+        if (!$lawyer)
+            return response('not found', 404);
+
+        return new LawyerResource($lawyer);
+    }
 }

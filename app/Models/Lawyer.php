@@ -24,10 +24,11 @@ class Lawyer extends Model
         'location',
         'idImage',
         'user_id',
+        'verified'
     ];
 
     protected $hidden = [
-     
+
         'created_at',
         'updated_at',
     ];
@@ -39,7 +40,7 @@ class Lawyer extends Model
 
     function followers()
     {
-        return $this->belongsToMany(User::class,'user_follow_lawyer','lawyer_id', 'user_id');
+        return $this->belongsToMany(User::class, 'user_follow_lawyer', 'lawyer_id', 'user_id');
     }
 
     function chat()
