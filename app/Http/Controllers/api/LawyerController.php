@@ -101,14 +101,7 @@ class LawyerController extends Controller
             })
             ->with('user.city')
             ->get();
-        /*
-        $lawyer = Lawyer::join('users','users.id','lawyers.user_id')
-                        ->join('cities','cities.id','users.city_id')
-                        ->join('countries','countries.id','cities.country_id')
-                        ->select('lawyers.*','users.name as username','users.email','users.image','users.phone','users.role','cities.name as city_name','countries.name as country_name')
-                        ->where('lawyers.id',$lawyer->id)
-                        ->get();
-*/
+ 
         return new LawyerResource($lawyer);
     }
 
