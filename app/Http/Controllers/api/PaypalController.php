@@ -30,7 +30,7 @@ class PaypalController extends Controller
             ]
         ]);
 
-        dd($response);
+       // dd($response);
 
         if(isset($response['id']) && $response['id']!=null) {
             foreach($response['links'] as $link) {
@@ -52,7 +52,7 @@ class PaypalController extends Controller
         $paypalToken = $provider->getAccessToken();
         $response = $provider->capturePaymentOrder($request->token);
 
-        dd($response);
+       // dd($response);
 
         if(isset($response['status']) && $response['status'] == 'COMPLETED') {
             return "Payment is successful!";
