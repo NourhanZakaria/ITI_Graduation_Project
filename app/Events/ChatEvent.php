@@ -32,7 +32,7 @@ class ChatEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('chat' . $this->chat->receiver_id),
+            new Channel('chat'),
         ];
     }
     public function broadcastAs()
