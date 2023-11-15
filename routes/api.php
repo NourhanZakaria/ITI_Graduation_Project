@@ -19,6 +19,7 @@ use App\Http\Controllers\api\FollowersController;
 use App\Http\Controllers\api\CityController;
 use App\Http\Controllers\api\AppointmentController;
 use App\Http\Controllers\api\NotificationsController;
+use App\Http\Controllers\api\PaypalController;
 
 
 
@@ -89,6 +90,11 @@ Route::apiResource('cities', CityController::class);
 Route::apiResource('appointments', AppointmentController::class);
 Route::post('lawyer_appointments', [AppointmentController::class, 'lawyer_appointments']);
 Route::get('notifications', [NotificationsController::class, 'notifications']);
+
+
+Route::post('paypal/payment', [PaypalController::class, 'payment'])->name('paypal');
+Route::get('paypal/success', [PaypalController::class, 'success'])->name('paypal_success');
+Route::get('paypal/cancel', [PaypalController::class, 'cancel'])->name('paypal_cancel');
 
 
 Route::apiResource('lawyerTimes', LawyerTimeController::class);
