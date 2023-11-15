@@ -86,15 +86,15 @@ class UserController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            "name" => "required|min:3",
-            "email" => ['required', 'email', function ($attribute, $value, $fail) {
+            "name" => "sometimes|min:3",
+            "email" => ['sometimes', 'email', function ($attribute, $value, $fail) {
                 if (!str_contains($value, '.com')) {
                     $fail('The ' . $attribute . ' must include ".com".');
                 }
-            }],
-            "phone" => "required",
-            "password" => "required|min:8",
-            'image' => 'required',
+            }, 'unique:users,email,' . $user->id,],
+            "phone" => ["sometimes", 'unique:users,phone,' . $user->id,],
+            "password" => "sometimes|min:8",
+            'image' => 'sometimes',
 
         ]);
 
