@@ -11,6 +11,7 @@ class ChatController extends Controller
 {
     public function store($user_id, Request $request)
     {
+        dd(Auth::guard('sanctum')->user());
         // Validate the request data
         $validatedData = $request->validate([
             'sender_id' => 'required',
@@ -44,7 +45,7 @@ class ChatController extends Controller
         //     ->get();
 
         // return response()->json($messages);
-        // dd(Auth::id());
+        dd(Auth::guard('sanctum')->user());
         $messages = Message::where(function ($query) {
             $query->where('receiver_id', 2)
                 ->where('sender_id', 5);
